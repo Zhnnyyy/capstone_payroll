@@ -48,6 +48,9 @@ const loadTables = () => {
 };
 
 function wrkhrs(minutes) {
+    if (minutes - 60 <= 0) {
+    return "";
+  }
   var hours = Math.floor(minutes / 60);
   var minutes = minutes % 60;
   return `${hours}hrs and ${minutes}mins`;
