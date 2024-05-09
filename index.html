@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | PAYROLL</title>
+    <link rel="stylesheet" type="text/css" href="src/style/style.css" />
+    <link rel="stylesheet" href="src/style/modal-style.css" />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css"
+    />
+
+    <link rel="stylesheet" href="src/style/sharp-thin.css" />
+
+    <link rel="stylesheet" href="src/style/sharp-solid.css" />
+
+    <link rel="stylesheet" href="src/style/sharp-regular.css" />
+    <link rel="stylesheet" href="src/style/sharp-light.css" />
+    <link rel="stylesheet" href="src/style/sweetalert2.min.css" />
+    <style>
+      * {
+        user-select: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="sidebar">
+      <div class="header">
+        <div class="toggle toggle-close">
+          <i class="fas fa-angle-right"></i>
+        </div>
+        <img src="src/img/logo.png" alt="" />
+        <span>CLD DIGITALS</span>
+      </div>
+
+      <div class="menus">
+        <div class="nav-link">
+          <ul>
+            <li class="nav-btn active" data-data="dashboard">
+              <i class="far fa-home" data-data="dashboard"></i>
+              <span data-data="dashboard">Dashboard</span>
+            </li>
+            <li class="nav-btn" data-data="manage">
+              <i class="far fa-users" data-data="manage"></i>
+              <span data-data="manage">Manage Employe</span>
+            </li>
+            <li class="nav-btn" data-data="timesheet">
+              <i class="far fa-clipboard-list-check" data-data="timesheet"></i>
+              <span data-data="timesheet">Timesheet</span>
+            </li>
+            <li class="nav-btn" data-data="attendance">
+              <i class="far fa-clipboard-list-check" data-data="attendance"></i>
+              <span data-data="attendance">Attendance</span>
+            </li>
+            <li class="nav-btn" data-data="approval">
+              <i class="far fa-calendar-check" data-data="approval"></i>
+              <span data-data="approval">Approval</span>
+            </li>
+            <li class="nav-btn" data-data="payroll">
+              <i class="far fa-sack-dollar" data-data="payroll"></i>
+              <span data-data="payroll">Payroll</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bottom-controls">
+          <ul>
+            <li id="btn-settings">
+              <i class="far fa-cog"></i>
+              <span>Settings</span>
+            </li>
+            <li>
+              <i class="far fa-sign-out"></i>
+              <span>Sign out</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="dashboard content">
+        <div class="header">
+          <div class="card">
+            <div class="card-logo"><i class="fas fa-users"></i></div>
+            <div class="card-content">
+              <h5>Total Employee</h5>
+              <span>1,4033</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-logo"><i class="fas fa-clipboard-user"></i></div>
+            <div class="card-content">
+              <h5>Attendance</h5>
+              <span>1,4033</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-logo">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+            <div class="card-content">
+              <h5>Request</h5>
+              <span>1,4033</span>
+            </div>
+          </div>
+          <!-- <div class="card">
+          <div class="card-logo"><i class="fas fa-clock"></i></div>
+          <div class="card-content">
+            <h5>Overtime</h5>
+            <span>1,4033</span>
+          </div>
+        </div> -->
+          <div class="card">
+            <div class="card-logo">
+              <i class="fas fa-calendar-exclamation"></i>
+            </div>
+            <div class="card-content">
+              <h5>Leave</h5>
+              <span>1,4033</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="manage content">
+        <button class="addEmployee" id="add_employee">
+          <i class="fa-solid fa-plus"></i> Add Employee
+        </button>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Middlename</th>
+                <th>Suffix</th>
+                <th>Type</th>
+                <th>Position</th>
+                <th>Rate</th>
+                <th>Schedule</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="row-manageEmployee"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="timesheet content">
+        <div class="header">
+          <div class="inputs">
+            <label for="startDate">Starting Date:</label>
+            <input type="date" name="startDate" id="timesheetstartDate" />
+          </div>
+          <div class="inputs">
+            <label for="endDate">End Date:</label>
+            <input type="date" name="endDate" id="timesheetendDate" />
+          </div>
+        </div>
+        <div class="table-container" id="timesheet-table"></div>
+      </div>
+      <div class="attendance content">
+        <div class="header">
+          <div class="inputs">
+            <label for="startDate">Starting Date:</label>
+            <input type="date" name="startDate" id="startDate" />
+          </div>
+          <div class="inputs">
+            <label for="endDate">End Date:</label>
+            <input type="date" name="endDate" id="endDate" />
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Time-in</th>
+                <th>Time-out</th>
+                <th>WorkHours</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="timesheetTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="approval content">
+        <div class="approval-header">
+          <ul>
+            <li class="tab-btn tab activetab" data-tab="leave">
+              Leave Request
+            </li>
+            <span class="separator">/</span>
+            <li class="tab-btn tab" data-tab="cash">Cash Advance</li>
+          </ul>
+        </div>
+        <div class="approval-container">
+          <div class="leave-request-box tab-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>StartDate</th>
+                    <th>EndDate</th>
+                    <th>Reason</th>
+                    <th>Remarks</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="leaverequesttbl"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="cash-advance-box tab-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Remarks</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>001</td>
+                    <td>John Doe</td>
+                    <td>2023-05-15</td>
+                    <td>2023-08-20</td>
+                    <td>Vacation</td>
+                    <td>Approved</td>
+                    <td class="btn-grp">
+                      <button><i class="fa-solid fa-check"></i></button
+                      ><button><i class="fa-solid fa-xmark"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>002</td>
+                    <td>Jane Smith</td>
+                    <td>2023-07-10</td>
+                    <td>2023-07-15</td>
+                    <td>Flu</td>
+                    <td>Approved</td>
+                    <td class="btn-grp">
+                      <button><i class="fa-solid fa-check"></i></button
+                      ><button><i class="fa-solid fa-xmark"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>003</td>
+                    <td>Michael Johnson</td>
+                    <td>2023-09-01</td>
+                    <td>2023-09-05</td>
+                    <td>Family emergency</td>
+                    <td>Approved</td>
+                    <td class="btn-grp">
+                      <button><i class="fa-solid fa-check"></i></button
+                      ><button><i class="fa-solid fa-xmark"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="payroll content">
+        <div class="payroll-header">
+          <div>
+            <a href="calculator.html" target="_blank" class="payrollCalc">
+              <i class="fa-solid fa-calculator-simple"></i>
+              <b>Payroll Calculator</b>
+            </a>
+          </div>
+          <div>
+            <button
+              href=""
+              class="payrollCalc"
+              target="_blank"
+              id="makepayroll"
+            >
+              <i class="fa-solid fa-calculator-simple"></i>
+              <b>Make Payroll</b>
+            </button>
+          </div>
+          <!-- <div class="header">
+            <div class="inputs">
+              <label for="payrollStartDate">Starting Date:</label>
+              <input type="date" name="startDate" id="payrollStartDate" />
+            </div>
+            <div class="inputs">
+              <label for="payrollEndDate">End Date:</label>
+              <input type="date" name="endDate" id="payrollEndDate" />
+            </div>
+          </div> -->
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Position</th>
+                <th>Rate</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Employee ID</td>
+                <td>Lastname</td>
+                <td>Firstname</td>
+                <td>Middlename</td>
+                <td>Type</td>
+                <td>Position</td>
+                <td class="btn-grp">
+                  <button><i class="far fa-edit"></i></button
+                  ><button><i class="far fa-user-times"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Employee ID</td>
+                <td>Lastname</td>
+                <td>Firstname</td>
+                <td>Middlename</td>
+                <td>Type</td>
+                <td>Position</td>
+                <td class="btn-grp">
+                  <button><i class="far fa-edit"></i></button
+                  ><button><i class="far fa-user-times"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Employee ID</td>
+                <td>Lastname</td>
+                <td>Firstname</td>
+                <td>Middlename</td>
+                <td>Type</td>
+                <td>Position</td>
+                <td class="btn-grp">
+                  <button><i class="far fa-edit"></i></button
+                  ><button><i class="far fa-user-times"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Employee ID</td>
+                <td>Lastname</td>
+                <td>Firstname</td>
+                <td>Middlename</td>
+                <td>Type</td>
+                <td>Position</td>
+                <td class="btn-grp">
+                  <button><i class="far fa-edit"></i></button
+                  ><button><i class="far fa-user-times"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>Employee ID</td>
+                <td>Lastname</td>
+                <td>Firstname</td>
+                <td>Middlename</td>
+                <td>Type</td>
+                <td>Position</td>
+                <td class="btn-grp">
+                  <button><i class="far fa-edit"></i></button
+                  ><button><i class="far fa-user-times"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="edit_employee_modal">
+      <div class="modal">
+        <div class="modal-content">
+          <div class="modal-title">Add Employee</div>
+          <div class="content">
+            <form id="form-editemployee">
+              <div class="input-container input">
+                <div class="input">
+                  <label for="Employeeid">Employee ID</label>
+                  <input
+                    type="text"
+                    name="Employeeid"
+                    id="Employeeid"
+                    readonly
+                  />
+                </div>
+                <div class="input">
+                  <label for="firstname">Firstname</label>
+                  <input type="text" name="firstname" id="firstname" />
+                </div>
+              </div>
+              <div class="input-container input">
+                <div class="input">
+                  <label for="middlename">Middlename</label>
+                  <input
+                    type="text"
+                    class="empty"
+                    name="middlename"
+                    id="middlename"
+                  />
+                </div>
+                <div class="input">
+                  <label for="lastname">Lastname</label>
+                  <input type="text" name="lastname" id="lastname" />
+                </div>
+                <div class="input">
+                  <label for="suffix">Suffix</label>
+                  <input type="text" class="empty" name="suffix" id="suffix" />
+                </div>
+              </div>
+              <div class="input-container input">
+                <div class="input">
+                  <label for="manage_employeetype">Employee Type</label>
+                  <select
+                    name="manage_employeetype"
+                    id="manage_employeetype"
+                  ></select>
+                </div>
+                <div class="input">
+                  <label for="manage_employeeposition">Employee Position</label>
+                  <select
+                    name="manage_employeeposition"
+                    id="manage_employeeposition"
+                  ></select>
+                </div>
+              </div>
+              <div class="input-container input">
+                <div class="input">
+                  <label for="employeeRate">Employee Rate</label>
+                  <select name="employeeRate" id="employeeRate">
+                    <!-- <option value="1">Semi-Monthly</option> -->
+                  </select>
+                </div>
+                <div class="input">
+                  <label for="employeeSchedule">Employee Schedule</label>
+                  <select name="employeeSchedule" id="employeeSchedule">
+                    <!-- <option value="1">Fixed</option>
+                    <option value="2">Flexible</option> -->
+                  </select>
+                </div>
+              </div>
+              <div class="input-container controls">
+                <div class="input">
+                  <button type="button" id="editCloseModal">Cancel</button>
+                </div>
+                <div class="input">
+                  <button type="submit" id="addEmployeebtn">Update</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="manage_employee_modal">
+      <div class="modal">
+        <div class="modal-content">
+          <div class="modal-title">Add Employee</div>
+          <div class="content">
+            <form id="form-addemployee">
+              <div class="input-container input">
+                <div class="input">
+                  <label for="Employeeid">Employee ID</label>
+                  <input type="text" name="Employeeid" id="Employeeid" />
+                </div>
+                <div class="input">
+                  <label for="firstname">Firstname</label>
+                  <input type="text" name="firstname" id="firstname" />
+                </div>
+              </div>
+              <div class="input-container input">
+                <div class="input">
+                  <label for="middlename">Middlename</label>
+                  <input
+                    type="text"
+                    class="empty"
+                    name="middlename"
+                    id="middlename"
+                  />
+                </div>
+                <div class="input">
+                  <label for="lastname">Lastname</label>
+                  <input type="text" name="lastname" id="lastname" />
+                </div>
+                <div class="input">
+                  <label for="suffix">Suffix</label>
+                  <input type="text" class="empty" name="suffix" id="suffix" />
+                </div>
+              </div>
+              <div class="input-container input">
+                <div class="input">
+                  <label for="manage_employeetype">Employee Type</label>
+                  <select
+                    name="manage_employeetype"
+                    id="manage_employeetype"
+                  ></select>
+                </div>
+                <div class="input">
+                  <label for="manage_employeeposition">Employee Position</label>
+                  <select
+                    name="manage_employeeposition"
+                    id="manage_employeeposition"
+                  ></select>
+                </div>
+              </div>
+              <div class="input-container input">
+                <div class="input">
+                  <label for="employeeRate">Employee Rate</label>
+                  <select name="employeeRate" id="employeeRate">
+                    <!-- <option value="1">Semi-Monthly</option> -->
+                  </select>
+                </div>
+                <div class="input">
+                  <label for="employeeSchedule">Employee Schedule</label>
+                  <select name="employeeSchedule" id="employeeSchedule">
+                    <!-- <option value="1">Fixed</option>
+                    <option value="2">Flexible</option> -->
+                  </select>
+                </div>
+              </div>
+              <div class="input-container controls">
+                <div class="input">
+                  <button type="button" id="manageCloseModal">Cancel</button>
+                </div>
+                <div class="input">
+                  <button type="submit" id="addEmployeebtn">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="settings_modal">
+      <div class="modal">
+        <div class="title">
+          <h5>Payroll Configuration</h5>
+          <span id="closeSettings">&times;</span>
+        </div>
+        <div class="content">
+          <div class="col employeetype">
+            <h5>Employee Types</h5>
+            <div class="tbl-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Types</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="row_types"></tbody>
+              </table>
+            </div>
+            <div class="controls">
+              <form id="form-types" method="post">
+                <input type="text" name="type" id="" placeholder="Type" />
+                <input type="text" name="value" id="" placeholder="Value" />
+                <button type="submit">
+                  <i class="fa-solid fa-plus-large"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="col employeeposition">
+            <h5>Employee Position</h5>
+            <div class="tbl-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Position</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="row-positions"></tbody>
+              </table>
+            </div>
+            <div class="controls">
+              <form action="" id="form-position">
+                <input
+                  type="text"
+                  name="position"
+                  id=""
+                  placeholder="Position"
+                />
+                <input type="text" name="value" id="" placeholder="Value" />
+                <button type="submit" id="addposition">
+                  <i class="fa-solid fa-plus-large"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="col uknown">
+            <img src="src/img/construction.svg" width="100%" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="src/js/sweetalert2.min.js"></script>
+    <script src="src/js/index.js" type="module"></script>
+    <!-- <script src="src/js/manageEmployee.js" type="module"></script> -->
+    <!-- <script src="src/js/attendance.js" type="module"></script> -->
+    <!-- <script type="module" src="src/js/leaverequest.js"></script> -->
+    <!-- <script src="src/js/settings.js" type="module"></script> -->
+    <!-- <script src="src/js/dashboard.js" type="module"></script> -->
+    <!-- <script src="src/js/timesheet.js" type="module"></script> -->
+    <script></script>
+  </body>
+</html>

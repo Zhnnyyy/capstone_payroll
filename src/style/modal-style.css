@@ -1,0 +1,296 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+:root {
+  --text: #0b1318;
+  --text-white: #fff;
+  --background-white: #f7f9fb;
+  --background-black: #000;
+  --primary: #292929;
+  --secondary: #e4e4e4;
+  --accent: #eaaa00;
+}
+.manage_employee_modal .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: none;
+}
+
+.manage_employee_modal .modal-content {
+  margin: 0 auto;
+  margin-top: 5%;
+  width: 600px;
+  /* height: 500px; */
+  border-radius: 10px;
+  background: var(--background-white);
+  padding: 30px;
+}
+.manage_employee_modal .modal-title {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.manage_employee_modal .content {
+  display: flex;
+  width: 100%;
+  display: block;
+  gap: 15px;
+}
+
+.manage_employee_modal .content .input-container {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.manage_employee_modal .content .input-container.input {
+  margin: 20px 0;
+}
+.manage_employee_modal .content .input {
+  flex: 1;
+}
+.manage_employee_modal .content .input label {
+  font-size: 13px;
+}
+.manage_employee_modal .content .input input,
+.manage_employee_modal .content .input select {
+  width: 100%;
+  padding: 5px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.manage_employee_modal .content .input select,
+.manage_employee_modal .content .input select option {
+  font-size: 13px;
+}
+.manage_employee_modal .content .input input:focus,
+.manage_employee_modal .content .input select:focus {
+  outline-color: var(--accent);
+}
+
+.manage_employee_modal .content .controls button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  color: var(--text);
+  font-weight: 600;
+  border-radius: 5px;
+}
+.manage_employee_modal .content .controls button:focus {
+  outline-color: var(--secondary);
+}
+.manage_employee_modal .content .controls #addEmployeebtn {
+  background: var(--accent);
+}
+
+/* -------------------manage EMPLOYEE MODAL----------------- */
+.edit_employee_modal .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: none;
+}
+
+.edit_employee_modal .modal-content {
+  margin: 0 auto;
+  margin-top: 5%;
+  width: 600px;
+  /* height: 500px; */
+  border-radius: 10px;
+  background: #fff;
+  padding: 16px;
+}
+.edit_employee_modal .modal-title {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.edit_employee_modal .content {
+  display: flex;
+  width: 100%;
+  display: block;
+  gap: 15px;
+}
+
+.edit_employee_modal .content .input-container {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.edit_employee_modal .content .input-container.input {
+  margin: 20px 0;
+}
+.edit_employee_modal .content .input {
+  flex: 1;
+}
+.edit_employee_modal .content .input label {
+  font-size: 13px;
+}
+.edit_employee_modal .content .input input,
+.edit_employee_modal .content .input select {
+  width: 100%;
+  padding: 5px;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.edit_employee_modal .content .input select,
+.edit_employee_modal .content .input select option {
+  font-size: 13px;
+}
+.edit_employee_modal .content .input input:focus,
+.edit_employee_modal .content .input select:focus {
+  outline-color: var(--accent);
+}
+
+.edit_employee_modal .content .controls button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  color: var(--text);
+  font-weight: 600;
+  border-radius: 5px;
+}
+.edit_employee_modal .content .controls button:focus {
+  outline-color: var(--sidebar-color);
+}
+.edit_employee_modal .content .controls #addEmployeebtn {
+  background: var(--accent);
+}
+
+/* ----------------SETTINGS MODAL------------------ */
+
+.settings_modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.settings_modal .modal {
+  margin: 0 auto;
+  width: 70%;
+  height: 600px;
+  margin-top: 5%;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.settings_modal .title {
+  font-weight: 600;
+  border-bottom: 2px solid #ccc;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.settings_modal .title span {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.settings_modal .content {
+  display: flex;
+  width: 100%;
+}
+.settings_modal .content .col {
+  flex: 1;
+  margin-top: 20px;
+}
+.settings_modal .employeetype {
+  padding: 5px;
+}
+.settings_modal .employeetype .controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+.settings_modal .employeetype .controls input {
+  padding: 8px;
+  width: 150px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.settings_modal .employeetype .controls input:focus {
+  outline-color: var(--accent);
+}
+.settings_modal .employeetype .controls button {
+  padding: 8px;
+  width: 36px;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: 5px;
+}
+.settings_modal .tbl-container {
+  overflow-x: auto;
+  max-height: 400px;
+}
+.settings_modal table {
+  width: 350px;
+}
+.settings_modal .tbl-container .deleteItem {
+  color: red;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+}
+
+.settings_modal .tbl-container::-webkit-scrollbar {
+  width: 3px;
+}
+.settings_modal .tbl-container::-webkit-scrollbar-track {
+  background: #fff;
+}
+.settings_modal .tbl-container::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 5px;
+}
+
+.settings_modal .employeeposition {
+  padding: 5px;
+}
+.settings_modal .employeeposition .controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+.settings_modal .employeeposition .controls input {
+  padding: 8px;
+  width: 150px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.settings_modal .employeeposition .controls input:focus {
+  outline-color: var(--accent);
+}
+.settings_modal .employeeposition .controls button {
+  padding: 8px;
+  width: 36px;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 1280px) {
+  .settings_modal .modal {
+    width: 90%;
+  }
+}
