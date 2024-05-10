@@ -1,171 +1,418 @@
-import { loadDropdownPositions, loadDropdownTypes } from "./dashboard.js";
-import { showMessage, showOptions } from "./model/MyAlert.js";
+import config from "./model/config.js";
+import { showMessage, showOptions, loading } from "./model/MyAlert.js";
 import { Fetch } from "./model/bridge.js";
-$(() => {
-  $("#form-types").submit(function (e) {
-    e.preventDefault();
-    const frmdata = new FormData(this);
-    if (frmdata.get("type").length > 2 && frmdata.get("value").length > 2) {
-      Fetch(
-        "api/addtype.php",
-        "POST",
-        (result) => {
-          const res = JSON.parse(result);
-          if (res.res == true) {
-            loadTypes();
-            loadDropdownTypes();
-            $("#form-types input[type='text']").val("");
-            showMessage("Success", "", "success");
-          } else {
-            showMessage("Failed", "Please try again", "error");
-          }
-        },
-        frmdata
-      );
-    } else {
-      showMessage("Oops", "Pleas fill out the blanks", "info");
-    }
+// $(() => {
+//   menu();
+//   types();
+// });
+export function SettingsFunction() {
+  menu();
+  types();
+}
+const menu = () => {
+  $(".settings-btn").on("click", function () {
+    const data = $(this).data("id");
+    toggleContent(data);
   });
-  $("#form-position").submit(function (e) {
-    e.preventDefault();
-    const frmdata = new FormData(this);
-    if (frmdata.get("position").length > 2 && frmdata.get("value").length > 2) {
-      Fetch(
-        "api/addposition.php",
-        "POST",
-        (result) => {
-          const res = JSON.parse(result);
-          if (res.res == true) {
-            loadPosition();
-            loadDropdownPositions();
-            $("#form-position input[type='text']").val("");
-            showMessage("Success", "", "success");
-          } else {
-            showMessage("Failed", "Please try again", "error");
-          }
-        },
-        frmdata
-      );
-    } else {
-      showMessage("Oops", "Pleas fill out the blanks", "info");
-    }
-  });
-  loadTypes();
-  loadPosition();
-});
+};
 
-const loadPosition = () => {
-  Fetch("api/showPositions.php", "GET", (result) => {
-    const res = JSON.parse(result);
-    const tbl = $("#row-positions").empty();
-    let row = 1;
-    $.each(res, function (index, data) {
-      tbl.append(
-        "<tr>" +
-          "<td>" +
-          row++ +
-          "</td>" +
-          "<td>" +
-          data.type +
-          "</td>" +
-          "<td>" +
-          data.value +
-          "</td>" +
-          "<td>" +
-          '<button class="deleteItem removePosition" data-id="' +
-          data.id +
-          '" >' +
-          '<i class="fa-regular fa-trash"></i>' +
-          "</button>" +
-          "</td>" +
-          "</tr>"
-      );
+const toggleContent = (target) => {
+  switch (target) {
+    case "type":
+      showContent(".type");
+      types();
+      break;
+    case "position":
+      showContent(".position");
+      position();
+      break;
+    case "rate":
+      showContent(".rate");
+      rate();
+      break;
+    case "schedule":
+      showContent(".schedule");
+      schedule();
+      break;
+  }
+};
+
+const showContent = (target) => {
+  $(".settings-content").css("display", "none");
+  $(target).css("display", "block");
+};
+
+const types = () => {
+  showtypes();
+  addTypes();
+};
+
+const position = () => {
+  showPosition();
+  addPositon();
+};
+
+const rate = () => {
+  showRate();
+  addRate();
+};
+
+const schedule = () => {
+  showSchedule();
+  addSchedule();
+};
+
+const showSchedule = () => {
+  Fetch(config.showSched, "GET", (result) => {
+    const tbl = $(".schedule-table").empty();
+    if (result.loading) {
+      loading(true);
+    }
+    if (!result.loading) {
+      loading(false);
+      let row = 0;
+      $.each(result.data, (i, data) => {
+        row += 1;
+        tbl.append(
+          "<tr>" +
+            "<td>" +
+            row +
+            "</td>" +
+            "<td>" +
+            data.Schedule +
+            "</td>" +
+            "<td>" +
+            "<div class='remove-schedule-btn' data-id='" +
+            data.id +
+            "'>" +
+            "<i class='fa-solid fa-xmark'></i>" +
+            "</div>" +
+            "</td>" +
+            "</tr>"
+        );
+      });
+    }
+
+    $(".remove-schedule-btn").on("click", function () {
+      const id = $(this).data("id");
+      showOptions("Warning", "Are you sure?", "warning", () => {
+        removeItem("schedule", id, showSchedule);
+      });
     });
   });
+};
 
-  $("#row-positions").on("click", ".removePosition", function () {
-    const id = $(this).data("id");
-    const data = new FormData();
-    data.append("id", id);
-    showOptions(
-      "Are you sure?",
-      "You cannot revert this action",
-      "warning",
-      () => {
-        Fetch(
-          "api/removePosition.php",
-          "POST",
-          (res) => {
-            const result = JSON.parse(res);
-            if (result.res == true) {
-              loadPosition();
-              loadDropdownPositions();
-              showMessage("Success", "Item has been removed", "success");
-            } else {
-              showMessage("Failed", "Please try again", "error");
-            }
-          },
-          data
-        );
-      }
+const addSchedule = () => {
+  $("#addSchedule").on("click", () => {
+    const name = $("#schedulename").val();
+    if (name == "") {
+      showMessage("Ooppsss", "Please fill all fields", "warning");
+      return;
+    }
+    const data = {
+      name: name,
+    };
+    Fetch(
+      config.addSchedule,
+      "POST",
+      (result) => {
+        if (result.loading) {
+          loading(true);
+        }
+        if (!result.loading) {
+          loading(false);
+          if (!result.data.Error) {
+            showMessage(
+              "Alright",
+              "Employee Schedule has been added",
+              "success"
+            ).then(() => {
+              $("#schedulename").val("");
+              showSchedule();
+            });
+
+            return;
+          }
+          showMessage("Ooppsss", result.data.msg, "error");
+        }
+      },
+      data
     );
   });
 };
 
-const loadTypes = () => {
-  Fetch("api/showTypes.php", "GET", (result) => {
-    const res = JSON.parse(result);
-    const tbl = $("#row_types").empty();
-    let row = 1;
-    $.each(res, function (index, data) {
-      tbl.append(
-        "<tr>" +
-          "<td>" +
-          row++ +
-          "</td>" +
-          "<td>" +
-          data.type +
-          "</td>" +
-          "<td>" +
-          data.value +
-          "</td>" +
-          "<td>" +
-          '<button class="deleteItem removeType" data-id="' +
-          data.id +
-          '" >' +
-          '<i class="fa-regular fa-trash"></i>' +
-          "</button>" +
-          "</td>" +
-          "</tr>"
-      );
+const showRate = () => {
+  Fetch(config.showRates, "GET", (result) => {
+    const tbl = $(".rate-table").empty();
+    if (result.loading) {
+      loading(true);
+    }
+    if (!result.loading) {
+      loading(false);
+      let row = 0;
+      $.each(result.data, (i, data) => {
+        row += 1;
+        tbl.append(
+          "<tr>" +
+            "<td>" +
+            row +
+            "</td>" +
+            "<td>" +
+            data.Rate +
+            "</td>" +
+            "<td>" +
+            data.Value +
+            "</td>" +
+            "<td>" +
+            "<div class='remove-rate-btn' data-id='" +
+            data.id +
+            "'>" +
+            "<i class='fa-solid fa-xmark'></i>" +
+            "</div>" +
+            "</td>" +
+            "</tr>"
+        );
+      });
+    }
+
+    $(".remove-rate-btn").on("click", function () {
+      const id = $(this).data("id");
+      showOptions("Warning", "Are you sure?", "warning", () => {
+        removeItem("rate", id, showRate);
+      });
     });
   });
+};
 
-  $("#row_types").on("click", ".removeType", function () {
-    const id = $(this).data("id");
-    const data = new FormData();
-    data.append("id", id);
-    showOptions(
-      "Are you sure?",
-      "You cannot revert this action",
-      "warning",
-      () => {
-        Fetch(
-          "api/removeType.php",
-          "POST",
-          (res) => {
-            const result = JSON.parse(res);
-            if (result.res == true) {
-              loadTypes();
-              loadDropdownTypes();
-              showMessage("Success", "Item has been removed", "success");
-            } else {
-              showMessage("Failed", "Please try again", "error");
-            }
-          },
-          data
-        );
-      }
+const addRate = () => {
+  $("#addRate").on("click", () => {
+    const name = $("#ratename").val();
+    const value = $("#ratevalue").val();
+    if (name == "" || value == "") {
+      showMessage("Ooppsss", "Please fill all fields", "warning");
+      return;
+    }
+    const data = {
+      name: name,
+      value: value,
+    };
+    Fetch(
+      config.addRate,
+      "POST",
+      (result) => {
+        if (result.loading) {
+          loading(true);
+        }
+        if (!result.loading) {
+          loading(false);
+          if (!result.data.Error) {
+            showMessage(
+              "Alright",
+              "Employee Rate has been added",
+              "success"
+            ).then(() => {
+              $("#positionname").val("");
+              $("#ratevalue").val("");
+              showRate();
+            });
+
+            return;
+          }
+          showMessage("Ooppsss", result.data.msg, "error");
+        }
+      },
+      data
     );
   });
+};
+
+const showPosition = () => {
+  Fetch(config.showPos, "GET", (result) => {
+    const tbl = $(".positions-table").empty();
+    if (result.loading) {
+      loading(true);
+    }
+    if (!result.loading) {
+      loading(false);
+      let row = 0;
+      $.each(result.data, (i, data) => {
+        row += 1;
+        tbl.append(
+          "<tr>" +
+            "<td>" +
+            row +
+            "</td>" +
+            "<td>" +
+            data.Position +
+            "</td>" +
+            "<td>" +
+            "<div class='remove-position-btn' data-id='" +
+            data.id +
+            "'>" +
+            "<i class='fa-solid fa-xmark'></i>" +
+            "</div>" +
+            "</td>" +
+            "</tr>"
+        );
+      });
+    }
+
+    $(".remove-position-btn").on("click", function () {
+      const id = $(this).data("id");
+      showOptions("Warning", "Are you sure?", "warning", () => {
+        removeItem("employeeposition", id, showPosition);
+      });
+    });
+  });
+};
+
+const addPositon = () => {
+  $("#addPosition").on("click", () => {
+    const name = $("#positionname").val();
+    if (name == "") {
+      showMessage("Ooppsss", "Please fill all fields", "warning");
+      return;
+    }
+    const data = {
+      name: name,
+    };
+    Fetch(
+      config.addPosition,
+      "POST",
+      (result) => {
+        if (result.loading) {
+          loading(true);
+        }
+        if (!result.loading) {
+          loading(false);
+          if (!result.data.Error) {
+            showMessage(
+              "Alright",
+              "Employee Position has been added",
+              "success"
+            ).then(() => {
+              $("#positionname").val("");
+              showPosition();
+            });
+
+            return;
+          }
+          showMessage("Ooppsss", result.data.msg, "error");
+        }
+      },
+      data
+    );
+  });
+};
+
+const addTypes = () => {
+  $("#addTypes").on("click", () => {
+    const name = $("#typename").val();
+    if (name == "") {
+      showMessage("Ooppsss", "Please fill all fields", "warning");
+      return;
+    }
+    const data = {
+      name: name,
+    };
+    Fetch(
+      config.addTypes,
+      "POST",
+      (result) => {
+        if (result.loading) {
+          loading(true);
+        }
+        if (!result.loading) {
+          loading(false);
+          if (!result.data.Error) {
+            showMessage(
+              "Alright",
+              "Employee type has been added",
+              "success"
+            ).then(() => {
+              $("#typename").val("");
+              showtypes();
+            });
+
+            return;
+          }
+          showMessage("Ooppsss", result.data.msg, "error");
+        }
+      },
+      data
+    );
+  });
+};
+
+const showtypes = () => {
+  Fetch(config.showTypes, "GET", (result) => {
+    const tbl = $(".types-table").empty();
+    if (result.loading) {
+      loading(true);
+    }
+    if (!result.loading) {
+      loading(false);
+      let row = 0;
+      $.each(result.data, (i, data) => {
+        row += 1;
+        tbl.append(
+          "<tr>" +
+            "<td>" +
+            row +
+            "</td>" +
+            "<td>" +
+            data.Type +
+            "</td>" +
+            "<td>" +
+            "<div class='remove-types-btn' data-id='" +
+            data.id +
+            "'>" +
+            "<i class='fa-solid fa-xmark'></i>" +
+            "</div>" +
+            "</td>" +
+            "</tr>"
+        );
+      });
+    }
+
+    $(".remove-types-btn").on("click", function () {
+      const id = $(this).data("id");
+      showOptions("Warning", "Are you sure?", "warning", () => {
+        removeItem("employeetypes", id, showtypes);
+      });
+    });
+  });
+};
+
+const removeItem = (name, id, target) => {
+  const data = {
+    name: name,
+    value: id,
+  };
+  Fetch(
+    config.removeDropdown,
+    "POST",
+    (result) => {
+      if (result.loading) {
+        loading(true);
+      }
+      if (!result.loading) {
+        loading(false);
+        if (!result.data.Error) {
+          showMessage("Success", "Item removed successfully", "success").then(
+            () => {
+              target();
+            }
+          );
+          return;
+        }
+        showMessage(
+          "Error",
+          "Some employee have this type please change their Employee Type first!",
+          "error"
+        );
+      }
+    },
+    data
+  );
 };

@@ -6,6 +6,7 @@
     <title>Dashboard | PAYROLL</title>
     <link rel="stylesheet" type="text/css" href="src/style/style.css" />
     <link rel="stylesheet" href="src/style/modal-style.css" />
+    <link rel="icon" href="/src/img/favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css"
@@ -194,8 +195,6 @@
             <li class="tab-btn tab activetab" data-tab="leave">
               Leave Request
             </li>
-            <span class="separator">/</span>
-            <li class="tab-btn tab" data-tab="cash">Cash Advance</li>
           </ul>
         </div>
         <div class="approval-container">
@@ -215,61 +214,6 @@
                   </tr>
                 </thead>
                 <tbody id="leaverequesttbl"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="cash-advance-box tab-content">
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Employee ID</th>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Remarks</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>001</td>
-                    <td>John Doe</td>
-                    <td>2023-05-15</td>
-                    <td>2023-08-20</td>
-                    <td>Vacation</td>
-                    <td>Approved</td>
-                    <td class="btn-grp">
-                      <button><i class="fa-solid fa-check"></i></button
-                      ><button><i class="fa-solid fa-xmark"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>002</td>
-                    <td>Jane Smith</td>
-                    <td>2023-07-10</td>
-                    <td>2023-07-15</td>
-                    <td>Flu</td>
-                    <td>Approved</td>
-                    <td class="btn-grp">
-                      <button><i class="fa-solid fa-check"></i></button
-                      ><button><i class="fa-solid fa-xmark"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>003</td>
-                    <td>Michael Johnson</td>
-                    <td>2023-09-01</td>
-                    <td>2023-09-05</td>
-                    <td>Family emergency</td>
-                    <td>Approved</td>
-                    <td class="btn-grp">
-                      <button><i class="fa-solid fa-check"></i></button
-                      ><button><i class="fa-solid fa-xmark"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
               </table>
             </div>
           </div>
@@ -552,67 +496,179 @@
     <div class="settings_modal">
       <div class="modal">
         <div class="title">
-          <h5>Payroll Configuration</h5>
+          <h5>Configuration</h5>
           <span id="closeSettings">&times;</span>
         </div>
         <div class="content">
-          <div class="col employeetype">
-            <h5>Employee Types</h5>
-            <div class="tbl-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Types</th>
-                    <th>Value</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="row_types"></tbody>
-              </table>
-            </div>
-            <div class="controls">
-              <form id="form-types" method="post">
-                <input type="text" name="type" id="" placeholder="Type" />
-                <input type="text" name="value" id="" placeholder="Value" />
-                <button type="submit">
-                  <i class="fa-solid fa-plus-large"></i>
-                </button>
-              </form>
-            </div>
+          <div class="control-panel">
+            <ul>
+              <li class="settings-btn" data-id="type">Type</li>
+              <li class="settings-btn" data-id="position">Position</li>
+              <li class="settings-btn" data-id="rate">Rate</li>
+              <li class="settings-btn" data-id="schedule">Schedule</li>
+            </ul>
           </div>
-          <div class="col employeeposition">
-            <h5>Employee Position</h5>
-            <div class="tbl-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Position</th>
-                    <th>Value</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="row-positions"></tbody>
-              </table>
-            </div>
-            <div class="controls">
-              <form action="" id="form-position">
+          <div class="settings-container">
+            <div class="type settings-content">
+              <h4>Employee Type</h4>
+              <div class="control-box">
                 <input
                   type="text"
-                  name="position"
-                  id=""
-                  placeholder="Position"
+                  name="typename"
+                  id="typename"
+                  placeholder="Name"
+                  autocomplete="off"
                 />
-                <input type="text" name="value" id="" placeholder="Value" />
-                <button type="submit" id="addposition">
-                  <i class="fa-solid fa-plus-large"></i>
-                </button>
-              </form>
+                <!-- <input
+                  type="text"
+                  name="typevalue"
+                  id="typevalue"
+                  placeholder="Value"
+                  autocomplete="off"
+                /> -->
+                <button id="addTypes"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              <div class="settings-table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <!-- <th>Value</th> -->
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="types-table">
+                    <tr>
+                      <td>1</td>
+                      <td>
+                        <div class="remove-items-btn">
+                          <i class="fa-solid fa-xmark"></i>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-          <div class="col uknown">
-            <img src="src/img/construction.svg" width="100%" alt="" />
+            <div class="position settings-content">
+              <h4>Employee Position</h4>
+              <div class="control-box">
+                <input
+                  type="text"
+                  name="positionname"
+                  id="positionname"
+                  placeholder="Name"
+                  autocomplete="off"
+                />
+                <!-- <input
+                  type="text"
+                  name="positionvalue"
+                  id="positionvalue"
+                  placeholder="Value"
+                  autocomplete="off"
+                /> -->
+                <button id="addPosition">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div class="settings-table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <!-- <th>Value</th> -->
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="positions-table">
+                    <tr>
+                      <td>1</td>
+                      <td>3</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="rate settings-content">
+              <h4>Employee Rate</h4>
+              <div class="control-box">
+                <input
+                  type="text"
+                  name="ratename"
+                  id="ratename"
+                  placeholder="Name"
+                  autocomplete="off"
+                />
+                <input
+                  type="text"
+                  name="ratevalue"
+                  id="ratevalue"
+                  placeholder="Value"
+                  autocomplete="off"
+                />
+                <button id="addRate"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              <div class="settings-table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Value</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="rate-table">
+                    <tr>
+                      <td>1</td>
+                      <td>2</td>
+                      <td>3</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="schedule settings-content">
+              <h4>Employee Schedule</h4>
+              <div class="control-box">
+                <input
+                  type="text"
+                  name="schedulename"
+                  id="schedulename"
+                  placeholder="Name"
+                  autocomplete="off"
+                />
+                <!-- <input
+                  type="text"
+                  name="schedulevalue"
+                  id="schedulevalue"
+                  placeholder="Value"
+                  autocomplete="off"
+                /> -->
+                <button id="addSchedule">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div class="settings-table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <!-- <th>Value</th> -->
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="schedule-table">
+                    <tr>
+                      <td>1</td>
+                      <td>3</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

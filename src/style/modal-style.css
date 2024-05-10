@@ -208,87 +208,112 @@
 .settings_modal .content {
   display: flex;
   width: 100%;
+  padding: 10px 0;
 }
-.settings_modal .content .col {
-  flex: 1;
-  margin-top: 20px;
+
+.settings_modal .content .control-panel {
+  width: 15%;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  height: 56vh;
 }
-.settings_modal .employeetype {
-  padding: 5px;
+.settings_modal .content ul {
+  list-style: none;
+  color: #5a5451;
+  font-weight: bold;
 }
-.settings_modal .employeetype .controls {
-  margin-top: 20px;
+.settings_modal .content ul li {
+  margin: 5px;
+  padding: 10px;
+}
+.settings_modal .content ul li:hover {
+  background-color: #eaaa00;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.content .settings-container {
+  padding: 10px;
+}
+.content .settings-container .control-box {
   display: flex;
+  padding: 10px;
   gap: 10px;
 }
-.settings_modal .employeetype .controls input {
+.settings-container .control-box input:nth-of-type(2) {
+  width: 60px;
+}
+.settings-container .control-box input {
   padding: 8px;
-  width: 150px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
-.settings_modal .employeetype .controls input:focus {
-  outline-color: var(--accent);
+.settings-container .control-box input:focus {
+  outline-color: #eaaa00;
 }
-.settings_modal .employeetype .controls button {
-  padding: 8px;
-  width: 36px;
-  background: var(--accent);
-  color: var(--text);
+.settings-container .control-box button {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  background-color: #eaaa00;
   border: none;
-  border-radius: 5px;
+  font-weight: bolder;
 }
-.settings_modal .tbl-container {
-  overflow-x: auto;
+.settings-container .settings-table-container {
   max-height: 400px;
+  overflow-y: scroll;
 }
-.settings_modal table {
-  width: 350px;
+.settings-container table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9em;
+  overflow-y: scroll;
+  border-radius: 5px 5px 0 0;
 }
-.settings_modal .tbl-container .deleteItem {
+.settings-container table thead {
+  position: sticky;
+  top: 0;
+}
+.settings-container table thead tr {
+  background: var(--secondary);
+  color: var(--text-color2);
+  text-align: left;
+}
+.settings-containertable th,
+.settings-container table td {
+  padding: 12px 15px;
+}
+.settings-container table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+.settings-container table tbody tr:nth-of-type(even) {
+  background: #fdfdfd;
+}
+.settings-container table tbody tr:last-child {
+  border-bottom: 2px solid var(--secondary);
+}
+.settings-container thead th:nth-of-type(1) {
+  width: 10px;
+}
+.settings-container thead th:nth-of-type(2) {
+  width: 190px;
+}
+.settings-container .type {
+  display: block;
+}
+.settings-container .position {
+  display: none;
+}
+.settings-container .rate {
+  display: none;
+}
+.settings-container .schedule {
+  display: none;
+}
+.remove-items-btn {
   color: red;
-  background: transparent;
-  border: none;
-  font-size: 16px;
 }
-
-.settings_modal .tbl-container::-webkit-scrollbar {
-  width: 3px;
-}
-.settings_modal .tbl-container::-webkit-scrollbar-track {
-  background: #fff;
-}
-.settings_modal .tbl-container::-webkit-scrollbar-thumb {
-  background-color: var(--secondary);
-  border-radius: 5px;
-}
-
-.settings_modal .employeeposition {
-  padding: 5px;
-}
-.settings_modal .employeeposition .controls {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-.settings_modal .employeeposition .controls input {
-  padding: 8px;
-  width: 150px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.settings_modal .employeeposition .controls input:focus {
-  outline-color: var(--accent);
-}
-.settings_modal .employeeposition .controls button {
-  padding: 8px;
-  width: 36px;
-  background: var(--accent);
-  color: var(--text);
-  border: none;
-  border-radius: 5px;
-}
-
 @media only screen and (max-width: 1280px) {
   .settings_modal .modal {
     width: 90%;

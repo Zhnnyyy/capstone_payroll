@@ -3,6 +3,7 @@ import { AttendanceFunction } from "./attendance.js";
 import { TimesheetFunction } from "./timesheet.js";
 import { RequestFunction } from "./request.js";
 import { PayrollFunction } from "./payroll.js";
+import { SettingsFunction } from "./settings.js";
 $(() => {
   $(".toggle").click(() => {
     $(".sidebar").toggleClass("close");
@@ -53,6 +54,7 @@ const openSettings = () => {
   $("#btn-settings").click(() => {
     $(".settings_modal").css("display", "block");
     $(".settings_modal .modal .content").css("display", "flex");
+    SettingsFunction();
   });
 };
 const closeSettings = () => {

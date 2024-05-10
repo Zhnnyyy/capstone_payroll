@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payroll</title>
     <link rel="stylesheet" href="src/style/payroll.css" />
+    <link rel="stylesheet" href="src/style/modal-payroll.css" />
+    <link rel="icon" href="/src/img/favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css"
@@ -17,153 +19,130 @@
     <link rel="stylesheet" href="src/style/sharp-regular.css" />
     <link rel="stylesheet" href="src/style/sharp-light.css" />
     <link rel="stylesheet" href="src/style/sweetalert2.min.css" />
+    <style>
+      * {
+        user-select: none;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <div><button class="selectBtn">Select Employee</button></div>
-      <div class="first">
-        <div class="information">
-          <div class="inputs">
-            <input type="text" name="" id="" />
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <input type="text" name="" id="" />
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <input type="text" name="" id="" />
-            <input type="text" name="" id="" />
-          </div>
-        </div>
-        <div class="earnings">
-          <div class="inputs">
-            <span>Basic Salary</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Hourly Rate</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>WorkDays</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Leave</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Hourly Rate</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>OT Hours</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Late</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Undertime</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Salary Adjustment</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Basic Pay</span>
-            <input type="text" name="" id="" />
-          </div>
-          <div class="inputs">
-            <span>Gross Pay</span>
-            <input type="text" name="" id="" />
-          </div>
-        </div>
+      <center>
+        <h2 id="title"></h2>
+      </center>
+      <div class="controlbox">
+        <button id="modal_addAllowance">
+          <i class="fa-solid fa-plus"></i> Allowance
+        </button>
+        <button id="modal_addDeduction">
+          <i class="fa-solid fa-plus"></i> Deduction
+        </button>
+        <button id="modal_addAdjustment">
+          <i class="fa-solid fa-plus"></i> Adjustment
+        </button>
       </div>
-      <div class="second">
-        <div class="allowance box">
-          <div class="header">
-            <span>Allowance</span>
-            <button><i class="fa-solid fa-plus"></i></button>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Rate Status</th>
+              <th>Rate</th>
+              <th>Hourly Rate</th>
+              <th>Working Days</th>
+              <th>Leave</th>
+              <th>Basic Pay</th>
+              <th>Overtime</th>
+              <th>Overtime Hrs</th>
+              <th>Overtime Pay</th>
+              <th>Allowance</th>
+              <th>Salary Adj</th>
+              <th>Total Earnings</th>
+              <th>Gross Pay</th>
+            </tr>
+          </thead>
+          <tbody class="payroll-table">
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td>11</td>
+              <td>11</td>
+              <td>1</td>
+              <td>1</td>
+              <td>11</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="footer-controls">
+        <button>Generate Payroll</button>
+      </div>
+    </div>
+
+    <div class="additional_modal">
+      <div class="modal">
+        <div class="modal-content">
+          <div class="close"><i class="fa-solid fa-xmark"></i></div>
+          <div class="modal-title">
+            <center><span id="targetText">Target</span></center>
           </div>
-          <hr />
           <div class="content">
-            <div class="items">
-              <div>Rice Allowance</div>
-              <div>2000</div>
-              <div><i class="fa-solid fa-xmark"></i></div>
+            <select id="dropdownEmployee"></select>
+            <div class="modal-controlbox">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Name"
+                autocomplete="off"
+              />
+              <input
+                type="text"
+                name="amount"
+                id="amount"
+                placeholder="Amount"
+                autocomplete="off"
+              />
+              <button id="add-modal-item">
+                <i class="fa-solid fa-plus"></i>
+              </button>
             </div>
-            <div class="items">
-              <div>Rice Allowance</div>
-              <div>2000</div>
-              <div><i class="fa-solid fa-xmark"></i></div>
+            <div class="payroll-modal-tbl-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody class="additional-table">
+                  <!-- <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td></td>
+                  </tr> -->
+                </tbody>
+              </table>
             </div>
-            <div class="items">
-              <div>Rice Allowance</div>
-              <div>2000</div>
-              <div><i class="fa-solid fa-xmark"></i></div>
-            </div>
-            <div class="items">
-              <div>Rice Allowance</div>
-              <div>2000</div>
-              <div><i class="fa-solid fa-xmark"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="deduction box">
-          <div class="header">
-            <span>Deduction</span>
-            <button><i class="fa-solid fa-plus"></i></button>
-          </div>
-          <hr />
-          <div class="content">
-            <div class="items">
-              <div>Item Charges</div>
-              <div>2000</div>
-              <div><i class="fa-solid fa-xmark"></i></div>
-            </div>
-            <div class="items">
-              <div>Item Charges</div>
-              <div>2000</div>
-              <div><i class="fa-solid fa-xmark"></i></div>
-            </div>
-            <div class="items">
-              <div>Item Charges</div>
-              <div>2000</div>
-              <div><i class="fa-solid fa-xmark"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="xtra box"></div>
-        <div class="summary box">
-          <div class="top">
-            <div class="inputs">
-              <span>Total Allowance</span>
-              <input type="text" name="" id="" />
-            </div>
-            <div class="inputs">
-              <span>Total Deduction</span>
-              <input type="text" name="" id="" />
-            </div>
-            <div class="inputs">
-              <span>Tax</span>
-              <input type="text" name="" id="" />
-            </div>
-            <div class="inputs">
-              <span>Net Pay</span>
-              <input type="text" name="" id="" />
-            </div>
-          </div>
-          <div class="bottom">
-            <span>Note</span>
-            <textarea name="" id=""></textarea>
-            <button class="submitBtn">Submit</button>
           </div>
         </div>
       </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="src/js/sweetalert2.min.js"></script>
+    <script src="src/js/mainpayroll.js" type="module"></script>
   </body>
 </html>
