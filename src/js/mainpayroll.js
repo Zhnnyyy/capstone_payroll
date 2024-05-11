@@ -295,7 +295,7 @@ const showTable = () => {
         const id = data.EmployeeID;
         const raw = await details(id);
         const allowance = raw.allowance == null ? 0 : raw.allowance;
-        const adjustment = raw.allowance == null ? 0 : raw.adjustment;
+        const adjustment = raw.adjustment == null ? 0 : raw.adjustment;
         const hrRate = parseInt(data.rateValue) / 8;
         const overtimePay = `${parseFloat(
           (hrRate * 1.25 * raw.overtimehrs).toFixed(2)
