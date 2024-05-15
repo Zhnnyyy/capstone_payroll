@@ -26,6 +26,7 @@ body {
 }
 .controlbox {
   display: flex;
+  position: relative;
   align-items: center;
   padding: 5px;
   padding-left: 20px;
@@ -34,6 +35,17 @@ body {
   gap: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.controlbox .checkbox-container {
+  position: absolute;
+  right: 0;
+  color: #0b1318;
+  font-size: 15px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+.checkbox-container button {
+  margin-left: 20px;
 }
 .table-container {
   overflow: auto;
@@ -94,7 +106,7 @@ body {
 }
 .container .table-container table th,
 .container .table-container table td {
-  padding: 5px 15px;
+  padding: 10px 15px;
 }
 .container .table-container table tbody tr {
   border-bottom: 1px solid #dddddd;
@@ -104,4 +116,10 @@ body {
 }
 .container .table-container table tbody tr:last-child {
   border-bottom: 2px solid var(--secondary);
+}
+
+.container .table-container table tbody tr.active {
+  background-color: #eaaa00;
+  color: black;
+  font-weight: bold;
 }

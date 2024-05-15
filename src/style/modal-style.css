@@ -299,6 +299,34 @@
 .settings-container thead th:nth-of-type(2) {
   width: 190px;
 }
+.settings-container .contribution .inputs {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.settings-container .contribution .inputs:last-of-type {
+  display: flex;
+  justify-content: end;
+}
+.settings-container .contribution button {
+  padding: 13px;
+  width: 70px;
+  border-radius: 8px;
+  color: var(--primary);
+  font-weight: bold;
+  border: none;
+  background-color: #eaaa00;
+}
+.settings-container .contribution input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.settings-container .contribution input:focus {
+  outline-color: #eaaa00;
+}
 .settings-container .type {
   display: block;
 }
@@ -309,6 +337,9 @@
   display: none;
 }
 .settings-container .schedule {
+  display: none;
+}
+.settings-container .contribution {
   display: none;
 }
 .remove-items-btn {

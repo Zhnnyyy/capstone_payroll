@@ -13,7 +13,124 @@ $(() => {
   ModaladdDeduction();
   ModaladdAdjustment();
   CloseModal();
+  generatePayroll();
+  deduct();
+  scrollMe();
+  is2ndCutoff();
 });
+
+const is2ndCutoff = () => {
+  const cutoff = localStorage.getItem("cutoff");
+  if (cutoff != "26-10") {
+    $(".chckboxdeduct").css("visibility", "hidden");
+    return;
+  }
+  $(".chckboxdeduct").css("visibility", "visible");
+};
+
+const scrollMe = () => {
+  $(".table-container").on("wheel", function () {
+    const delta = Math.sign(event.deltaY);
+    this.scrollLeft += delta * 200;
+  });
+};
+
+const deduct = () => {
+  $("#chckbox").on("change", () => {
+    showTable();
+  });
+};
+
+const generatePayroll = () => {
+  $("#genPayroll").click(() => {
+    let employee = [];
+    $.each($(".payroll-table tr"), function () {
+      const ID = $(this).find("td").eq(1).text();
+      const rate = $(this).find("td").eq(4).text();
+      const wrkdays = $(this).find("td").eq(6).text();
+      const undertime = $(this).find("td").eq(7).text();
+      const leave = $(this).find("td").eq(8).text();
+      const basicpay = $(this).find("td").eq(9).text();
+      const regularholiday = $(this).find("td").eq(10).text();
+      const regularPay = $(this).find("td").eq(11).text();
+      const specialHoliday = $(this).find("td").eq(12).text();
+      const specialPay = $(this).find("td").eq(13).text();
+      const overtimeHrs = $(this).find("td").eq(15).text();
+      const overtimePay = $(this).find("td").eq(16).text();
+      const allowance = $(this).find("td").eq(17).text();
+      const salaryAdjustment = $(this).find("td").eq(18).text();
+      const totalearnings = $(this).find("td").eq(19).text();
+      const grosspay = $(this).find("td").eq(20).text();
+      const pagibig = $(this).find("td").eq(21).text();
+      const philhealth = $(this).find("td").eq(22).text();
+      const sss = $(this).find("td").eq(23).text();
+      const tax = $(this).find("td").eq(24).text();
+      const deduction = $(this).find("td").eq(25).text();
+      const totaldeduct = $(this).find("td").eq(26).text();
+      const netpay = $(this).find("td").eq(27).text();
+
+      employee.push({
+        ID: ID,
+        rate: rate,
+        wrkdays: wrkdays,
+        undertime: undertime,
+        leave: leave,
+        basicpay: basicpay,
+        regularholiday: regularholiday,
+        regularPay: regularPay,
+        specialHoliday: specialHoliday,
+        specialPay: specialPay,
+        overtimeHrs: overtimeHrs,
+        overtimePay: overtimePay,
+        allowance: allowance,
+        salaryAdjustment: salaryAdjustment,
+        totalearnings: totalearnings,
+        grosspay: grosspay,
+        pagibig: pagibig,
+        philhealth: philhealth,
+        sss: sss,
+        tax: tax,
+        deduction: deduction,
+        totaldeduct: totaldeduct,
+        netpay: netpay,
+      });
+    });
+    setTimeout(() => {
+      showOptions("Are you sure?", "", "info", () => {
+        const PayrollDetails = {
+          cutoff: `${localStorage.getItem("startDate")}-${localStorage.getItem(
+            "endDate"
+          )}`,
+          details: employee,
+        };
+        Fetch(
+          config.addPayroll,
+          "POST",
+          (result) => {
+            if (result.loading) {
+              loading(true);
+            }
+            if (!result.loading) {
+              loading(false);
+              if (result.data.Error) {
+                showMessage("Oppsss", result.data.msg, "error");
+                return;
+              }
+              showMessage(
+                `${localStorage.getItem("startDate")}-${localStorage.getItem(
+                  "endDate"
+                )}`,
+                "Payroll has been created",
+                "success"
+              ).then(() => {});
+            }
+          },
+          PayrollDetails
+        );
+      });
+    }, 100);
+  });
+};
 
 const CloseModal = () => {
   $(".close").click(() => {
@@ -280,6 +397,32 @@ const addModalEmployeeAdditional = (
   );
 };
 
+const EmployeeTax = (totalgrosspay) => {
+  const totalGross = totalgrosspay;
+  let tax = 0;
+  const tbl = [
+    { f_range: 20833, s_range: 33330, tax: true, percent: 15, value: 20833 },
+    { f_range: 33333, s_range: 66666, tax: true, percent: 20, value: 33333 },
+    { f_range: 66667, s_range: 166666, tax: true, percent: 25, value: 66667 },
+    { f_range: 166667, s_range: 666666, tax: true, percent: 30, value: 166667 },
+    {
+      f_range: 666667,
+      s_range: 9999999999999,
+      tax: true,
+      percent: 35,
+      value: 666667,
+    },
+  ];
+
+  $.each(tbl, (i, data) => {
+    if (totalGross >= data.f_range && totalGross <= data.s_range) {
+      tax = (totalGross - data.value) * (data.percent / 100);
+      return;
+    }
+  });
+  return tax;
+};
+
 const showTable = () => {
   Fetch(config.showEmployee, "GET", (result) => {
     const tbl = $(".payroll-table").empty();
@@ -294,23 +437,67 @@ const showTable = () => {
         const name = `${data.Firstname} ${data.Lastname}`;
         const id = data.EmployeeID;
         const raw = await details(id);
+        const SSSRate = (await contributions("SSS")) / 100;
+        const PAGIBIGRate = (await contributions("PAGIBIG")) / 100;
+        const PHILHEALTHRate = (await contributions("PHILHEALTH")) / 100;
         const allowance = raw.allowance == null ? 0 : parseFloat(raw.allowance);
         const adjustment =
           raw.adjustment == null ? 0 : parseFloat(raw.adjustment);
+        const deduction = raw.deduction == null ? 0 : parseFloat(raw.deduction);
         const hrRate = parseInt(data.rateValue) / 8;
-        const overtimePay = `${parseFloat(
-          (hrRate * 1.25 * raw.overtimehrs).toFixed(2)
-        )}`;
-        const basicPay = hrRate * parseInt(raw.wrkhrs);
-        const totalEarnings = `${parseFloat(
-          parseFloat(overtimePay) +
-            parseFloat(allowance) +
-            parseFloat(adjustment)
-        ).toFixed(2)}`;
-        const grossPay = parseFloat(
-          parseFloat(totalEarnings) + parseFloat(basicPay)
-        ).toFixed(2);
         count += 1;
+        //START COMPUTATION
+        const txt_wrkdays = `${raw.wrkdays}days`;
+        const txt_undertime = `${raw.undertimehrs}hrs`;
+        const txt_leave = raw.leave == 0 ? "0" : `${raw.leave}days`;
+        const txt_RegHoliday =
+          raw.regularHoliday.count == 0
+            ? "0"
+            : `${raw.regularHoliday.count}days`;
+
+        const txt_RegHolidayPay = raw.regularHolidayPay.total;
+        const txt_SpecHoliday =
+          raw.specialHoliday.count == 0
+            ? "0"
+            : `${raw.specialHoliday.count}days`;
+        `${raw.specialHoliday.count}days`;
+
+        const txt_SpecHolidayPay = raw.specialHolidayPay.total;
+
+        const txt_basicpay =
+          (parseInt(raw.wrkdays - raw.undertime) + parseInt(txt_leave)) *
+            data.rateValue +
+          hrRate * parseInt(txt_undertime);
+        const txt_overtime = `${raw.overtime}days`;
+        const txt_overtimeHrs = `${raw.overtimehrs}hrs`;
+        const txt_overtimePay = `${parseFloat(
+          hrRate * 1.25 * parseInt(txt_overtimeHrs)
+        ).toFixed(2)}`;
+        const txt_totalearnings =
+          parseFloat(txt_overtimePay) +
+          parseInt(adjustment) +
+          parseInt(allowance) +
+          parseFloat(txt_SpecHolidayPay) +
+          parseFloat(txt_RegHolidayPay);
+        console.log(raw);
+        const grosspay = txt_basicpay + txt_totalearnings;
+        const lastgrosspay = raw.lastgrosspay;
+        const total_gross =
+          parseFloat(grosspay) + parseFloat(lastgrosspay.replace(/₱/g, ""));
+        let txtPagibig = total_gross * PAGIBIGRate;
+        let txtphilhealth = total_gross * PHILHEALTHRate;
+        let txtsss = total_gross * SSSRate;
+        let txtTax = EmployeeTax(total_gross);
+        console.log(total_gross);
+        if (!$("#chckbox").is(":checked")) {
+          txtPagibig = 0;
+          txtphilhealth = 0;
+          txtsss = 0;
+          txtTax = 0;
+        }
+        const txtTotalDeduct = txtPagibig + txtphilhealth + txtsss + deduction;
+        const netPay = grosspay - txtTotalDeduct;
+        //END COMPUTATION
         tbl.append(
           "<tr>" +
             "<td>" +
@@ -326,47 +513,109 @@ const showTable = () => {
             data.Rate +
             "</td>" +
             "<td>" +
-            data.rateValue +
+            `₱ ${data.rateValue}` +
             "</td>" +
             "<td>" +
-            hrRate +
+            `₱ ${hrRate}` +
             "</td>" +
             "<td>" +
-            `${raw.wrkdays}days` +
+            txt_wrkdays +
             "</td>" +
             "<td>" +
-            raw.leave +
+            txt_undertime +
             "</td>" +
             "<td>" +
-            basicPay +
+            txt_leave +
             "</td>" +
             "<td>" +
-            `${raw.overtime} day` +
+            `₱ ${txt_basicpay}` +
             "</td>" +
             "<td>" +
-            `${raw.overtimehrs}hrs` +
+            txt_RegHoliday +
             "</td>" +
             "<td>" +
-            overtimePay +
+            `₱ ${txt_RegHolidayPay}` +
             "</td>" +
             "<td>" +
-            allowance +
+            txt_SpecHoliday +
             "</td>" +
             "<td>" +
-            adjustment +
+            `₱ ${txt_SpecHolidayPay}` +
             "</td>" +
             "<td>" +
-            totalEarnings +
+            txt_overtime +
             "</td>" +
             "<td>" +
-            grossPay +
+            txt_overtimeHrs +
+            "</td>" +
+            "<td>" +
+            `₱ ${txt_overtimePay}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${allowance}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${adjustment}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${txt_totalearnings.toFixed(2)}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${grosspay.toFixed(2)}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${txtPagibig.toFixed(2)}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${txtphilhealth.toFixed(2)}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${txtsss.toFixed(2)}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${txtTax.toFixed(2)}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${deduction}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${txtTotalDeduct.toFixed(2)}` +
+            "</td>" +
+            "<td>" +
+            `₱ ${netPay.toFixed(2)}` +
             "</td>" +
             "</tr>"
         );
       });
+
+      setTimeout(() => {
+        $(".table-container table tbody tr").on("click", function () {
+          $(".table-container table tbody tr").removeClass("active");
+          $(this).addClass("active");
+        });
+      }, 1000);
     }
   });
 };
+
+async function contributions(target) {
+  const data = {
+    target: target,
+  };
+  const response = await fetch(config.getContribution, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
+}
 
 async function details(id) {
   const apiUrl = config.payroll;

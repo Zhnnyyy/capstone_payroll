@@ -66,6 +66,7 @@ const loadEmployee = () => {
             if (!result.loading) {
               loading(false);
               const raw = result.data;
+              console.log(raw);
               loadDetails(
                 content,
                 raw.leave,
@@ -73,7 +74,9 @@ const loadEmployee = () => {
                 raw.wrkdays,
                 raw.wrkhrs,
                 raw.table,
-                raw.overtimeHrs
+                raw.overtimeHrs,
+                raw.undertime,
+                raw.undertimeHrs
               );
             }
           },
@@ -98,9 +101,15 @@ function dayType(date) {
   return fetch(config.holidays, { method: "GET" })
     .then((response) => response.json())
     .then((data) => {
-      const res = data.Holidays;
+      const res = data.Regular_Holidays;
+      const res1 = data.Special_Holidays;
       let dayName = "Regular";
       $.each(res, (index, data) => {
+        if (data.date == date) {
+          dayName = data.name;
+        }
+      });
+      $.each(res1, (index, data) => {
         if (data.date == date) {
           dayName = data.name;
         }
@@ -120,7 +129,9 @@ const loadDetails = (
   wrkdays,
   wrkhrss,
   table,
-  overtimehrs
+  overtimehrs,
+  undertime,
+  undertimeHrs
 ) => {
   const content = element.empty();
   content.append(
@@ -138,6 +149,12 @@ const loadDetails = (
       "</i></h5>" +
       "<h5>Total Overtime Hours: <i>" +
       getOvertimeHrs(overtimehrs) +
+      "</i></h5>" +
+      "<h5>Total Undertime: <i>" +
+      undertime +
+      "</i></h5>" +
+      "<h5>Total Undertime Hours: <i>" +
+      Math.floor(undertimeHrs / 60) +
       "</i></h5>" +
       "<hr />" +
       " <div class='table-container'>" +
@@ -160,7 +177,8 @@ const loadDetails = (
       "</table>" +
       "</div>"
   );
-  const mtable = $(".timesheet-tbody").empty();
+
+  const mtable = content.find(".timesheet-tbody").empty();
   let count = 1;
   $.each(table, async (index, data) => {
     mtable.append(

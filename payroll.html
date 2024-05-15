@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="src/style/sharp-regular.css" />
     <link rel="stylesheet" href="src/style/sharp-light.css" />
     <link rel="stylesheet" href="src/style/sweetalert2.min.css" />
+    <script src="src/js/model/tableToExcel.js"></script>
     <style>
       * {
         user-select: none;
@@ -40,9 +41,14 @@
         <button id="modal_addAdjustment">
           <i class="fa-solid fa-plus"></i> Adjustment
         </button>
+        <div class="checkbox-container">
+          <input class="chckboxdeduct" type="checkbox" name="" id="chckbox" />
+          <label for="chckbox" class="chckboxdeduct">Mandatory deductions</label>
+          <button id="exportBtn">Export</button>
+        </div>
       </div>
       <div class="table-container">
-        <table>
+        <table id="payroll-tables">
           <thead>
             <tr>
               <th>#</th>
@@ -52,8 +58,13 @@
               <th>Rate</th>
               <th>Hourly Rate</th>
               <th>Working Days</th>
+              <th>Undertime</th>
               <th>Leave</th>
               <th>Basic Pay</th>
+              <th>RegularHoliday</th>
+              <th>RegularPay</th>
+              <th>SpecialHoliday</th>
+              <th>SpecialPay</th>
               <th>Overtime</th>
               <th>Overtime Hrs</th>
               <th>Overtime Pay</th>
@@ -61,32 +72,20 @@
               <th>Salary Adj</th>
               <th>Total Earnings</th>
               <th>Gross Pay</th>
+              <th>PAG-IBIG</th>
+              <th>PHILHEALTH</th>
+              <th>SSS</th>
+              <th>TAX</th>
+              <th>Deduction</th>
+              <th>Total Deduct</th>
+              <th>NetPay</th>
             </tr>
           </thead>
-          <tbody class="payroll-table">
-            <tr>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-              <td>11</td>
-              <td>11</td>
-              <td>1</td>
-              <td>1</td>
-              <td>11</td>
-              <td>1</td>
-              <td>1</td>
-              <td>1</td>
-            </tr>
-          </tbody>
+          <tbody class="payroll-table"></tbody>
         </table>
       </div>
       <div class="footer-controls">
-        <button>Generate Payroll</button>
+        <button id="genPayroll">Generate Payroll</button>
       </div>
     </div>
 
@@ -144,5 +143,19 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="src/js/sweetalert2.min.js"></script>
     <script src="src/js/mainpayroll.js" type="module"></script>
+    <script>
+      $(() => {
+        $("#exportBtn").click(() => {
+          TableToExcel.convert(document.getElementById("payroll-tables"), {
+            name: "Payroll.xlsx",
+            sheet: {
+              name: `Payroll(${localStorage.getItem(
+                "startDate"
+              )}-${localStorage.getItem("endDate")}`,
+            },
+          });
+        });
+      });
+    </script>
   </body>
 </html>

@@ -317,8 +317,11 @@ const addEmployee = () => {
         "POST",
         (result) => {
           const data = result.data;
-          console.log(data);
+          if (result.loading) {
+            loading(true);
+          }
           if (!result.loading) {
+            loading(false);
             if (data.Error == false) {
               $(".manage_employee_modal .modal").css("display", "none");
               $(".manage_employee_modal .content").css("display", "none");

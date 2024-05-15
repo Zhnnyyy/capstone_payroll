@@ -356,14 +356,6 @@ table tbody tr:last-child {
 }
 
 /* Payroll Content */
-.payroll .payroll-content {
-  border: 1px solid black;
-  width: 100%;
-  height: 90vh;
-  background: url(../img/payroll.svg);
-  background-position: center;
-  background-repeat: no-repeat;
-}
 
 .payroll .payrollCalc {
   align-self: flex-end;
@@ -408,6 +400,102 @@ table tbody tr:last-child {
 .payroll .header input:focus {
   border: 2px solid var(--accent);
   outline: none;
+}
+
+.payroll .payroll-details {
+  margin-top: 20px;
+  /* padding: 10px; */
+}
+
+.payroll-details details summary {
+  width: 100%;
+  background-color: #eee;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.payroll-details details summary {
+  position: relative;
+}
+.payroll-details details summary .parent {
+  position: absolute;
+  display: inline;
+  width: 95%;
+}
+.payroll-details details summary .child-parent {
+  display: flex;
+  justify-content: space-between;
+}
+.payroll-details details summary .right {
+  display: flex;
+  gap: 10px;
+}
+.payroll-details details .other-details button {
+  padding: 8px;
+  margin: 10px 5px;
+  right: 0;
+  font-weight: 400;
+  background-color: #eaaa00;
+  border: none;
+  border-radius: 3px;
+  color: #0b1318;
+}
+.payroll-details details .table-container {
+  margin: 0;
+  padding: 0;
+  max-height: 450px;
+}
+
+.payroll .table-container {
+  overflow: auto;
+  padding: 10px;
+  position: relative;
+  margin-top: 20px;
+  background-color: #fff;
+  max-height: 70vh;
+}
+.payroll .table-container table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9em;
+  overflow-y: scroll;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 20px;
+}
+.payroll .table-container table thead {
+  position: sticky;
+  top: 0;
+}
+.payroll .table-container table thead tr {
+  background: var(--secondary);
+  color: var(--text-color2);
+  text-align: left;
+}
+.payroll .table-container table th:not(:nth-of-type(1)) {
+  font-size: 12px;
+  min-width: 120px;
+}
+.payroll .table-container table th:nth-of-type(3) {
+  min-width: 200px;
+}
+.payroll .table-container table th,
+.payroll .table-container table td {
+  padding: 10px 15px;
+}
+.payroll .table-container table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+.payroll .table-container table tbody tr:nth-of-type(even) {
+  background: #fdfdfd;
+}
+.payroll .table-container table tbody tr:last-child {
+  border-bottom: 2px solid var(--secondary);
+}
+
+.payroll .table-container table tbody tr.active {
+  background-color: #eaaa00;
+  color: black;
+  font-weight: bold;
 }
 @media only screen and (max-width: 1200px) {
   .manage {

@@ -34,7 +34,73 @@ const toggleContent = (target) => {
       showContent(".schedule");
       schedule();
       break;
+    case "contribution":
+      showContent(".contribution");
+      contribution();
+      break;
   }
+};
+
+const contribution = () => {
+  Fetch(config.showContributions, "GET", (result) => {
+    const sss = $("#sss");
+    const pagibig = $("#pagibig");
+    const philhealth = $("#philhealth");
+    if (result.loading) {
+      loading(true);
+    }
+    if (!result.loading) {
+      loading(false);
+      const data = result.data;
+      $.each(data, (i, res) => {
+        if (res.Name == "SSS") {
+          sss.val(`${res.Value}%`);
+        }
+        if (res.Name == "PAGIBIG") {
+          pagibig.val(`${res.Value}%`);
+        }
+        if (res.Name == "PHILHEALTH") {
+          philhealth.val(`${res.Value}%`);
+        }
+      });
+    }
+  });
+
+  $("#updateContributionBtn").click(() => {
+    const sss = $("#sss").val().replace(/%/g, "");
+    const pagibig = $("#pagibig").val().replace(/%/g, "");
+    const philhealth = $("#philhealth").val().replace(/%/g, "");
+    const data = {
+      sss: sss,
+      pagibig: pagibig,
+      philhealth: philhealth,
+    };
+    if (isNaN(sss) || isNaN(pagibig) || isNaN(pagibig)) {
+      showMessage("Oppsss", "Check your input", "warning");
+      return;
+    }
+    Fetch(
+      config.updateContributions,
+      "POST",
+      (result) => {
+        if (result.loading) {
+          loading(true);
+        }
+        if (!result.loading) {
+          loading(false);
+          if (result.data.Error) {
+            showMessage("Error", result.data.msg, "error");
+            return;
+          }
+
+          showMessage("Success", "Successfully updated", "success").then(() => {
+            contribution();
+          });
+        }
+      },
+      data
+    );
+  });
 };
 
 const showContent = (target) => {
@@ -122,13 +188,15 @@ const addSchedule = () => {
         if (!result.loading) {
           loading(false);
           if (!result.data.Error) {
+            $("#schedulename").val("");
             showMessage(
               "Alright",
               "Employee Schedule has been added",
               "success"
             ).then(() => {
-              $("#schedulename").val("");
-              showSchedule();
+              setTimeout(() => {
+                showSchedule();
+              }, 500);
             });
 
             return;
@@ -206,14 +274,16 @@ const addRate = () => {
         if (!result.loading) {
           loading(false);
           if (!result.data.Error) {
+            $("#positionname").val("");
+            $("#ratevalue").val("");
             showMessage(
               "Alright",
               "Employee Rate has been added",
               "success"
             ).then(() => {
-              $("#positionname").val("");
-              $("#ratevalue").val("");
-              showRate();
+              setTimeout(() => {
+                showRate();
+              }, 500);
             });
 
             return;
@@ -286,13 +356,15 @@ const addPositon = () => {
         if (!result.loading) {
           loading(false);
           if (!result.data.Error) {
+            $("#positionname").val("");
             showMessage(
               "Alright",
               "Employee Position has been added",
               "success"
             ).then(() => {
-              $("#positionname").val("");
-              showPosition();
+              setTimeout(() => {
+                showPosition();
+              }, 500);
             });
 
             return;
@@ -325,13 +397,15 @@ const addTypes = () => {
         if (!result.loading) {
           loading(false);
           if (!result.data.Error) {
+            $("#typename").val("");
             showMessage(
               "Alright",
               "Employee type has been added",
               "success"
             ).then(() => {
-              $("#typename").val("");
-              showtypes();
+              setTimeout(() => {
+                showtypes();
+              }, 500);
             });
 
             return;

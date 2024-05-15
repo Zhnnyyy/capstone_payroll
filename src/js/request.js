@@ -43,6 +43,12 @@ const loadLeaveRequestTable = () => {
             "<td class='btn-grp'>" +
             "<button class='accept' data-id='" +
             data.id +
+            "' data-startdate='" +
+            data.startDate +
+            "' data-enddate='" +
+            data.endDate +
+            "' data-employee='" +
+            data.EmployeeID +
             "'><i class='fa-solid fa-check'></i></button><button class='reject' data-id='" +
             data.id +
             "'><i class='fa-solid fa-xmark'></i></button>" +
@@ -54,12 +60,15 @@ const loadLeaveRequestTable = () => {
 
     $(".accept").on("click", function (e) {
       const data = $(this).data("id");
+      const startdate = $(this).data("startdate");
+      const enddate = $(this).data("enddate");
+      const employee = $(this).data("employee");
       showOptions(
         "Are you sure?",
         "You cannot revert this action",
         "warning",
         () => {
-          updateRequest(data, "approved");
+          updateRequest(data, startdate, enddate, employee, "Approved");
         }
       );
     });
@@ -70,17 +79,20 @@ const loadLeaveRequestTable = () => {
         "You cannot revert this action",
         "warning",
         () => {
-          updateRequest(data, "rejected");
+          updateRequest(data, "Rejected");
         }
       );
     });
   });
 };
 
-const updateRequest = (id, status) => {
+const updateRequest = (id, date1, date2, employee, status) => {
   const data = {
     uid: id,
     status: status,
+    date1: date1,
+    date2: date2,
+    employee: employee,
   };
   Fetch(
     config.updateRequest,
@@ -90,6 +102,7 @@ const updateRequest = (id, status) => {
         loading(true);
       }
       if (!result.loading) {
+        console.log(result);
         loading(false);
         const res = result.data;
         if (res.Error == false) {
@@ -99,7 +112,7 @@ const updateRequest = (id, status) => {
             }
           );
         } else {
-          showMessage("Error", "Failed to read data", "error");
+          showMessage("Error", res.msg, "error");
         }
       }
     },

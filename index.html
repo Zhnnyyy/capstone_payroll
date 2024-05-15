@@ -222,12 +222,6 @@
       <div class="payroll content">
         <div class="payroll-header">
           <div>
-            <a href="calculator.html" target="_blank" class="payrollCalc">
-              <i class="fa-solid fa-calculator-simple"></i>
-              <b>Payroll Calculator</b>
-            </a>
-          </div>
-          <div>
             <button
               href=""
               class="payrollCalc"
@@ -238,93 +232,46 @@
               <b>Make Payroll</b>
             </button>
           </div>
-          <!-- <div class="header">
-            <div class="inputs">
-              <label for="payrollStartDate">Starting Date:</label>
-              <input type="date" name="startDate" id="payrollStartDate" />
-            </div>
-            <div class="inputs">
-              <label for="payrollEndDate">End Date:</label>
-              <input type="date" name="endDate" id="payrollEndDate" />
-            </div>
-          </div> -->
         </div>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Employee ID</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Position</th>
-                <th>Rate</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Employee ID</td>
-                <td>Lastname</td>
-                <td>Firstname</td>
-                <td>Middlename</td>
-                <td>Type</td>
-                <td>Position</td>
-                <td class="btn-grp">
-                  <button><i class="far fa-edit"></i></button
-                  ><button><i class="far fa-user-times"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>Employee ID</td>
-                <td>Lastname</td>
-                <td>Firstname</td>
-                <td>Middlename</td>
-                <td>Type</td>
-                <td>Position</td>
-                <td class="btn-grp">
-                  <button><i class="far fa-edit"></i></button
-                  ><button><i class="far fa-user-times"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>Employee ID</td>
-                <td>Lastname</td>
-                <td>Firstname</td>
-                <td>Middlename</td>
-                <td>Type</td>
-                <td>Position</td>
-                <td class="btn-grp">
-                  <button><i class="far fa-edit"></i></button
-                  ><button><i class="far fa-user-times"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>Employee ID</td>
-                <td>Lastname</td>
-                <td>Firstname</td>
-                <td>Middlename</td>
-                <td>Type</td>
-                <td>Position</td>
-                <td class="btn-grp">
-                  <button><i class="far fa-edit"></i></button
-                  ><button><i class="far fa-user-times"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>Employee ID</td>
-                <td>Lastname</td>
-                <td>Firstname</td>
-                <td>Middlename</td>
-                <td>Type</td>
-                <td>Position</td>
-                <td class="btn-grp">
-                  <button><i class="far fa-edit"></i></button
-                  ><button><i class="far fa-user-times"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="payroll-details">
+          <details>
+            <summary>HelloWorld</summary>
+            <div class="table-container">
+              <table id="payroll-tables">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Rate</th>
+                    <th>Working Days</th>
+                    <th>Undertime</th>
+                    <th>Leave</th>
+                    <th>Basic Pay</th>
+                    <th>RegularHoliday</th>
+                    <th>RegularPay</th>
+                    <th>SpecialHoliday</th>
+                    <th>SpecialPay</th>
+                    <th>Overtime</th>
+                    <th>Overtime Hrs</th>
+                    <th>Overtime Pay</th>
+                    <th>Allowance</th>
+                    <th>Salary Adj</th>
+                    <th>Total Earnings</th>
+                    <th>Gross Pay</th>
+                    <th>PAG-IBIG</th>
+                    <th>PHILHEALTH</th>
+                    <th>SSS</th>
+                    <th>TAX</th>
+                    <th>Deduction</th>
+                    <th>Total Deduct</th>
+                    <th>NetPay</th>
+                  </tr>
+                </thead>
+                <tbody class="payroll-table"></tbody>
+              </table>
+            </div>
+          </details>
         </div>
       </div>
     </div>
@@ -423,11 +370,21 @@
               <div class="input-container input">
                 <div class="input">
                   <label for="Employeeid">Employee ID</label>
-                  <input type="text" name="Employeeid" id="Employeeid" />
+                  <input
+                    type="text"
+                    name="Employeeid"
+                    id="Employeeid"
+                    autocomplete="off"
+                  />
                 </div>
                 <div class="input">
                   <label for="firstname">Firstname</label>
-                  <input type="text" name="firstname" id="firstname" />
+                  <input
+                    type="text"
+                    name="firstname"
+                    id="firstname"
+                    autocomplete="off"
+                  />
                 </div>
               </div>
               <div class="input-container input">
@@ -438,15 +395,27 @@
                     class="empty"
                     name="middlename"
                     id="middlename"
+                    autocomplete="off"
                   />
                 </div>
                 <div class="input">
                   <label for="lastname">Lastname</label>
-                  <input type="text" name="lastname" id="lastname" />
+                  <input
+                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    autocomplete="off"
+                  />
                 </div>
                 <div class="input">
                   <label for="suffix">Suffix</label>
-                  <input type="text" class="empty" name="suffix" id="suffix" />
+                  <input
+                    type="text"
+                    class="empty"
+                    name="suffix"
+                    id="suffix"
+                    autocomplete="off"
+                  />
                 </div>
               </div>
               <div class="input-container input">
@@ -506,6 +475,7 @@
               <li class="settings-btn" data-id="position">Position</li>
               <li class="settings-btn" data-id="rate">Rate</li>
               <li class="settings-btn" data-id="schedule">Schedule</li>
+              <li class="settings-btn" data-id="contribution">Contributions</li>
             </ul>
           </div>
           <div class="settings-container">
@@ -655,6 +625,7 @@
                 <table>
                   <thead>
                     <tr>
+                      <th>#</th>
                       <th>Name</th>
                       <!-- <th>Value</th> -->
                       <th></th>
@@ -669,6 +640,38 @@
                 </table>
               </div>
             </div>
+            <div class="contribution settings-content">
+              <div class="inputs">
+                <label for="sss">SSS</label>
+                <input
+                  type="text"
+                  name=""
+                  id="sss"
+                  placeholder="Don't include %"
+                />
+              </div>
+              <div class="inputs">
+                <label for="philhealth">PhilHealth</label>
+                <input
+                  type="text"
+                  name=""
+                  id="philhealth"
+                  placeholder="Don't include %"
+                />
+              </div>
+              <div class="inputs">
+                <label for="pagibig">Pag-IBIG</label>
+                <input
+                  type="text"
+                  name=""
+                  id="pagibig"
+                  placeholder="Don't include %"
+                />
+              </div>
+              <div class="inputs">
+                <button id="updateContributionBtn">Save</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -677,6 +680,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="src/js/sweetalert2.min.js"></script>
     <script src="src/js/index.js" type="module"></script>
+    <script src="src/js/model/tableToExcel.js"></script>
     <!-- <script src="src/js/manageEmployee.js" type="module"></script> -->
     <!-- <script src="src/js/attendance.js" type="module"></script> -->
     <!-- <script type="module" src="src/js/leaverequest.js"></script> -->
