@@ -316,6 +316,7 @@ const addEmployee = () => {
         config.addEmployee,
         "POST",
         (result) => {
+          console.log(result);
           const data = result.data;
           if (result.loading) {
             loading(true);

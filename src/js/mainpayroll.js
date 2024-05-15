@@ -430,7 +430,6 @@ const showTable = () => {
       loading(true);
     }
     if (!result.loading) {
-      loading(false);
       const data = result.data;
       var count = 0;
       $.each(data, async (i, data) => {
@@ -594,6 +593,7 @@ const showTable = () => {
           $(this).addClass("active");
         });
       }, 1000);
+      loading(false);
     }
   });
 };
