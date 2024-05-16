@@ -6,7 +6,42 @@ import config from "./model/config.js";
 // });
 export function RequestFunction() {
   loadLeaveRequestTable();
+  history();
 }
+
+const history = () => {
+  $("#request-history").click(() => {
+    $(".request-history-modal .modal").css("display", "block");
+    $(".request-history-modal .content").css("display", "block");
+
+    Fetch(config.requesthistory, "GET", (result) => {
+      if (result.loading) {
+        loading(true);
+      }
+      if (!result.loading) {
+        loading(false);
+        const tbl = $(".request-history-tbl").empty();
+
+        $.each(result.data, (i, data) => {
+          tbl.append(
+            `<tr>
+            <td>${data.name}</td>
+            <td>${data.startDate}</td>
+            <td>${data.endDate}</td>
+            <td>${data.status}</td>
+            <td>${data.Date}</td>
+          </tr>`
+          );
+        });
+      }
+    });
+  });
+
+  $(".request-history-modal i").click(() => {
+    $(".request-history-modal .modal").css("display", "none");
+  });
+};
+
 const loadLeaveRequestTable = () => {
   Fetch(config.employeeRequest, "GET", (result) => {
     if (result.loading) {

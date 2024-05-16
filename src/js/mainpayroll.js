@@ -446,20 +446,20 @@ const showTable = () => {
         const hrRate = parseInt(data.rateValue) / 8;
         count += 1;
         //START COMPUTATION
-        const txt_wrkdays = `${raw.wrkdays}days`;
-        const txt_undertime = `${raw.undertimehrs}hrs`;
-        const txt_leave = raw.leave == 0 ? "0" : `${raw.leave}days`;
+        const txt_wrkdays = `${raw.wrkdays} days`;
+        const txt_undertime = `${raw.undertimehrs} hrs`;
+        const txt_leave = raw.leave == 0 ? "0" : `${raw.leave} days`;
         const txt_RegHoliday =
           raw.regularHoliday.count == 0
             ? "0"
-            : `${raw.regularHoliday.count}days`;
+            : `${raw.regularHoliday.count} days`;
 
         const txt_RegHolidayPay = raw.regularHolidayPay.total;
         const txt_SpecHoliday =
           raw.specialHoliday.count == 0
             ? "0"
-            : `${raw.specialHoliday.count}days`;
-        `${raw.specialHoliday.count}days`;
+            : `${raw.specialHoliday.count} days`;
+        `${raw.specialHoliday.count} days`;
 
         const txt_SpecHolidayPay = raw.specialHolidayPay.total;
 
@@ -467,8 +467,8 @@ const showTable = () => {
           (parseInt(raw.wrkdays - raw.undertime) + parseInt(txt_leave)) *
             data.rateValue +
           hrRate * parseInt(txt_undertime);
-        const txt_overtime = `${raw.overtime}days`;
-        const txt_overtimeHrs = `${raw.overtimehrs}hrs`;
+        const txt_overtime = `${raw.overtime} days`;
+        const txt_overtimeHrs = `${raw.overtimehrs} hrs`;
         const txt_overtimePay = `${parseFloat(
           hrRate * 1.25 * parseInt(txt_overtimeHrs)
         ).toFixed(2)}`;
@@ -494,7 +494,8 @@ const showTable = () => {
           txtsss = 0;
           txtTax = 0;
         }
-        const txtTotalDeduct = txtPagibig + txtphilhealth + txtsss + deduction;
+        const txtTotalDeduct =
+          txtPagibig + txtphilhealth + txtsss + deduction + txtTax;
         const netPay = grosspay - txtTotalDeduct;
         //END COMPUTATION
         tbl.append(

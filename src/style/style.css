@@ -128,7 +128,30 @@ body {
   margin-left: 70px;
   transition: var(--trans1);
 }
-
+.dashboard .inner-container {
+  display: flex;
+}
+.dashboard .left {
+  flex: 1;
+}
+.dashboard .right {
+  color: #5a5451;
+  width: 300px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+.dashboard .right .right-container {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.dashboard .right .holiday-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  border-bottom: 1px solid #e9e9e9;
+}
 .dashboard .header {
   width: 100%;
   padding: 10px;
@@ -332,6 +355,7 @@ table tbody tr:last-child {
 .approval-header ul {
   list-style: none;
   display: flex;
+  justify-content: space-between;
   font-weight: 600;
   font-size: 17px;
   color: var(--text);
@@ -405,6 +429,11 @@ table tbody tr:last-child {
 .payroll .payroll-details {
   margin-top: 20px;
   /* padding: 10px; */
+}
+
+.payroll-details {
+  overflow: auto;
+  max-height: 90vh;
 }
 
 .payroll-details details summary {

@@ -345,6 +345,72 @@
 .remove-items-btn {
   color: red;
 }
+
+.request-history-modal .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: none;
+}
+
+.request-history-modal .modal-content {
+  margin: 0 auto;
+  margin-top: 5%;
+  width: 700px;
+  height: 650px;
+  border-radius: 10px;
+  background: var(--background-white);
+  padding: 20px;
+}
+
+.request-history-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.request-history-modal .content {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.request-history-modal .table-container table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9em;
+  overflow-y: scroll;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 20px;
+}
+.request-history-modal .table-container table thead {
+  position: sticky;
+  top: 0;
+}
+.request-history-modal .table-container table thead tr {
+  background: var(--secondary);
+  color: var(--text-color2);
+  text-align: left;
+}
+
+.request-history-modal .table-container table th,
+.request-history-modal .table-container table td {
+  padding: 10px 15px;
+}
+.request-history-modal .table-container table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+.request-history-modal .table-container table tbody tr:nth-of-type(even) {
+  background: #fdfdfd;
+}
+.request-history-modal .table-container table tbody tr:last-child {
+  border-bottom: 2px solid var(--secondary);
+}
+
 @media only screen and (max-width: 1280px) {
   .settings_modal .modal {
     width: 90%;

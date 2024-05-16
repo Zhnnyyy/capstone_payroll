@@ -82,44 +82,53 @@
 
     <div class="container">
       <div class="dashboard content">
-        <div class="header">
-          <div class="card">
-            <div class="card-logo"><i class="fas fa-users"></i></div>
-            <div class="card-content">
-              <h5>Total Employee</h5>
-              <span>1,4033</span>
+        <div class="inner-container">
+          <div class="left">
+            <div class="header">
+              <div class="card">
+                <div class="card-logo"><i class="fas fa-users"></i></div>
+                <div class="card-content">
+                  <h5>Total Employee</h5>
+                  <span id="employee">0</span>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-logo">
+                  <i class="fas fa-clipboard-user"></i>
+                </div>
+                <div class="card-content">
+                  <h5>Attendance</h5>
+                  <span id="attendance">0</span>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-logo">
+                  <i class="fa-solid fa-bell"></i>
+                </div>
+                <div class="card-content">
+                  <h5>Request</h5>
+                  <span id="request">0</span>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-logo">
+                  <i class="fas fa-calendar-exclamation"></i>
+                </div>
+                <div class="card-content">
+                  <h5>Leave</h5>
+                  <span id="leave">0</span>
+                </div>
+              </div>
             </div>
+            <div class="content"></div>
           </div>
-          <div class="card">
-            <div class="card-logo"><i class="fas fa-clipboard-user"></i></div>
-            <div class="card-content">
-              <h5>Attendance</h5>
-              <span>1,4033</span>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-logo">
-              <i class="fa-solid fa-bell"></i>
-            </div>
-            <div class="card-content">
-              <h5>Request</h5>
-              <span>1,4033</span>
-            </div>
-          </div>
-          <!-- <div class="card">
-          <div class="card-logo"><i class="fas fa-clock"></i></div>
-          <div class="card-content">
-            <h5>Overtime</h5>
-            <span>1,4033</span>
-          </div>
-        </div> -->
-          <div class="card">
-            <div class="card-logo">
-              <i class="fas fa-calendar-exclamation"></i>
-            </div>
-            <div class="card-content">
-              <h5>Leave</h5>
-              <span>1,4033</span>
+          <div class="right">
+            <center><h2>Holidays This year</h2></center>
+            <div class="right-container">
+              <div class="holiday-container">
+                <label><strong>Date:</strong> 2024-04-01</label>
+                <label><strong>Name:</strong> Labor Day</label>
+              </div>
             </div>
           </div>
         </div>
@@ -194,6 +203,9 @@
           <ul>
             <li class="tab-btn tab activetab" data-tab="leave">
               Leave Request
+            </li>
+            <li class="tab-btn tab" data-tab="Logs" id="request-history">
+              <i class="fa-solid fa-clock-rotate-left"></i>
             </li>
           </ul>
         </div>
@@ -677,6 +689,40 @@
       </div>
     </div>
 
+    <div class="request-history-modal">
+      <div class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Request History</h2>
+            <i class="fa-solid fa-xmark" id="closeModal"></i>
+          </div>
+          <div class="content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody class="request-history-tbl">
+                  <tr>
+                    <td>Name</td>
+                    <td>From</td>
+                    <td>To</td>
+                    <td>Status</td>
+                    <td>Date</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="src/js/sweetalert2.min.js"></script>
     <script src="src/js/index.js" type="module"></script>

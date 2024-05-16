@@ -4,6 +4,7 @@ import { TimesheetFunction } from "./timesheet.js";
 import { RequestFunction } from "./request.js";
 import { PayrollFunction } from "./payroll.js";
 import { SettingsFunction } from "./settings.js";
+import { DashboardFunction } from "./dashboard.js";
 $(() => {
   $(".toggle").click(() => {
     $(".sidebar").toggleClass("close");
@@ -28,12 +29,12 @@ const btnAct = () => {
 };
 
 const tabBtn = () => {
-  $(".tab-btn").click(function (e) {
-    e.preventDefault();
-    $(".tab-btn").removeClass("activetab");
-    $(this).addClass("activetab");
-    tabMenu($(e.target).data("tab"));
-  });
+  // $(".tab-btn").click(function (e) {
+  //   e.preventDefault();
+  //   $(".tab-btn").removeClass("activetab");
+  //   $(this).addClass("activetab");
+  //   tabMenu($(e.target).data("tab"));
+  // });
 };
 
 const AddEmployeeOpenModal = () => {
@@ -67,6 +68,7 @@ const menuBtn = (data) => {
   switch (data) {
     case "dashboard":
       toggleContent(".dashboard");
+      DashboardFunction();
       break;
     case "manage":
       toggleContent(".manage");
@@ -96,18 +98,10 @@ const tabMenu = (data) => {
     case "leave":
       toggleTab(".leave-request-box");
       break;
-    case "cash":
-      toggleTab(".cash-advance-box");
-      break;
   }
 };
 
 const toggleContent = (data) => {
   $(".content").css("display", "none");
-  $(data).css("display", "block");
-};
-
-const toggleTab = (data) => {
-  $(".tab-content").css("display", "none");
   $(data).css("display", "block");
 };
