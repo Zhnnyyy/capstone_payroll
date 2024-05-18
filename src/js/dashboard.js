@@ -36,8 +36,8 @@ const dashboardDetails = () => {
       $.each(yearHoliday, (i, res) => {
         tbl.append(
           `<div class="holiday-container">
-            <label><strong>Date:</strong> ${res.date}</label>
-            <label><strong>Name:</strong> ${res.name}</label>
+            <label>${res.name}</label>
+             <label> ${res.date}</label>
           </div>`
         );
       });
