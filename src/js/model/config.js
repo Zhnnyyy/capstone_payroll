@@ -74,7 +74,7 @@ const config = {
   payrollLogs: "https://capstone-qx2y.onrender.com/payroll/logs",
   payrollCutoffLogs: "https://capstone-qx2y.onrender.com/payroll/cutoff/logs",
   deleteCutoff: "https://capstone-qx2y.onrender.com/payroll/cutoff/delete",
-  requesthistory: "https://capstone-qx2y.onrender.com/request/history",
+  requesthistory: "https://capstone-qx2y.onrender.com/employee/request/history",
   dashboardDetails: "https://capstone-qx2y.onrender.com/dashboard",
 };
 
