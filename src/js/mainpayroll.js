@@ -594,9 +594,10 @@ const showTable = () => {
           $(this).addClass("active");
         });
       }, 1000);
-      loading(false);
+      
     }
   });
+loading(false);
 };
 
 async function contributions(target) {
