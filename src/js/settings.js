@@ -169,44 +169,46 @@ const showSchedule = () => {
 };
 
 const addSchedule = () => {
-  $("#addSchedule").on("click", () => {
-    const name = $("#schedulename").val();
-    if (name == "") {
-      showMessage("Ooppsss", "Please fill all fields", "warning");
-      return;
-    }
-    const data = {
-      name: name,
-    };
-    Fetch(
-      config.addSchedule,
-      "POST",
-      (result) => {
-        if (result.loading) {
-          loading(true);
-        }
-        if (!result.loading) {
-          loading(false);
-          if (!result.data.Error) {
-            $("#schedulename").val("");
-            showMessage(
-              "Alright",
-              "Employee Schedule has been added",
-              "success"
-            ).then(() => {
-              setTimeout(() => {
-                showSchedule();
-              }, 500);
-            });
-
-            return;
+  $("#addSchedule")
+    .off("click")
+    .on("click", () => {
+      const name = $("#schedulename").val();
+      if (name == "") {
+        showMessage("Ooppsss", "Please fill all fields", "warning");
+        return;
+      }
+      const data = {
+        name: name,
+      };
+      Fetch(
+        config.addSchedule,
+        "POST",
+        (result) => {
+          if (result.loading) {
+            loading(true);
           }
-          showMessage("Ooppsss", result.data.msg, "error");
-        }
-      },
-      data
-    );
-  });
+          if (!result.loading) {
+            loading(false);
+            if (!result.data.Error) {
+              $("#schedulename").val("");
+              showMessage(
+                "Alright",
+                "Employee Schedule has been added",
+                "success"
+              ).then(() => {
+                setTimeout(() => {
+                  showSchedule();
+                }, 500);
+              });
+
+              return;
+            }
+            showMessage("Ooppsss", result.data.msg, "error");
+          }
+        },
+        data
+      );
+    });
 };
 
 const showRate = () => {
@@ -253,47 +255,47 @@ const showRate = () => {
 };
 
 const addRate = () => {
-  $("#addRate").on("click", () => {
-    const name = $("#ratename").val();
-    const value = $("#ratevalue").val();
-    if (name == "" || value == "") {
-      showMessage("Ooppsss", "Please fill all fields", "warning");
-      return;
-    }
-    const data = {
-      name: name,
-      value: value,
-    };
-    Fetch(
-      config.addRate,
-      "POST",
-      (result) => {
-        if (result.loading) {
-          loading(true);
-        }
-        if (!result.loading) {
-          loading(false);
-          if (!result.data.Error) {
-            $("#positionname").val("");
-            $("#ratevalue").val("");
-            showMessage(
-              "Alright",
-              "Employee Rate has been added",
-              "success"
-            ).then(() => {
-              setTimeout(() => {
-                showRate();
-              }, 500);
-            });
-
-            return;
+  $("#addRate")
+    .off("click")
+    .on("click", () => {
+      const name = $("#ratename").val();
+      const value = $("#ratevalue").val();
+      if (name == "" || value == "") {
+        showMessage("Ooppsss", "Please fill all fields", "warning");
+        return;
+      }
+      const data = {
+        name: name,
+        value: value,
+      };
+      Fetch(
+        config.addRate,
+        "POST",
+        (result) => {
+          if (result.loading) {
+            loading(true);
           }
-          showMessage("Ooppsss", result.data.msg, "error");
-        }
-      },
-      data
-    );
-  });
+          if (!result.loading) {
+            loading(false);
+            if (!result.data.Error) {
+              showMessage(
+                "Alright",
+                "Employee Rate has been added",
+                "success"
+              ).then(() => {
+                $("#ratename").val("");
+                $("#ratevalue").val("");
+                showRate();
+              });
+
+              return;
+            }
+            showMessage("Ooppsss", result.data.msg, "error");
+          }
+        },
+        data
+      );
+    });
 };
 
 const showPosition = () => {
@@ -337,85 +339,85 @@ const showPosition = () => {
 };
 
 const addPositon = () => {
-  $("#addPosition").on("click", () => {
-    const name = $("#positionname").val();
-    if (name == "") {
-      showMessage("Ooppsss", "Please fill all fields", "warning");
-      return;
-    }
-    const data = {
-      name: name,
-    };
-    Fetch(
-      config.addPosition,
-      "POST",
-      (result) => {
-        if (result.loading) {
-          loading(true);
-        }
-        if (!result.loading) {
-          loading(false);
-          if (!result.data.Error) {
-            $("#positionname").val("");
-            showMessage(
-              "Alright",
-              "Employee Position has been added",
-              "success"
-            ).then(() => {
-              setTimeout(() => {
-                showPosition();
-              }, 500);
-            });
-
-            return;
+  $("#addPosition")
+    .off("click")
+    .on("click", () => {
+      const name = $("#positionname").val();
+      if (name == "") {
+        showMessage("Ooppsss", "Please fill all fields", "warning");
+        return;
+      }
+      const data = {
+        name: name,
+      };
+      Fetch(
+        config.addPosition,
+        "POST",
+        (result) => {
+          if (result.loading) {
+            loading(true);
           }
-          showMessage("Ooppsss", result.data.msg, "error");
-        }
-      },
-      data
-    );
-  });
+          if (!result.loading) {
+            loading(false);
+            if (!result.data.Error) {
+              $("#positionname").val("");
+              showMessage(
+                "Alright",
+                "Employee Position has been added",
+                "success"
+              ).then(() => {
+                showPosition();
+              });
+
+              return;
+            }
+            showMessage("Ooppsss", result.data.msg, "error");
+          }
+        },
+        data
+      );
+    });
 };
 
 const addTypes = () => {
-  $("#addTypes").on("click", () => {
-    const name = $("#typename").val();
-    if (name == "") {
-      showMessage("Ooppsss", "Please fill all fields", "warning");
-      return;
-    }
-    const data = {
-      name: name,
-    };
-    Fetch(
-      config.addTypes,
-      "POST",
-      (result) => {
-        if (result.loading) {
-          loading(true);
-        }
-        if (!result.loading) {
-          loading(false);
-          if (!result.data.Error) {
-            $("#typename").val("");
-            showMessage(
-              "Alright",
-              "Employee type has been added",
-              "success"
-            ).then(() => {
-              setTimeout(() => {
-                showtypes();
-              }, 500);
-            });
-
-            return;
+  $("#addTypes")
+    .off("click")
+    .on("click", () => {
+      const name = $("#typename").val();
+      if (name == "") {
+        showMessage("Ooppsss", "Please fill all fields", "warning");
+        return;
+      }
+      const data = {
+        name: name,
+      };
+      Fetch(
+        config.addTypes,
+        "POST",
+        (result) => {
+          if (result.loading) {
+            loading(true);
           }
-          showMessage("Ooppsss", result.data.msg, "error");
-        }
-      },
-      data
-    );
-  });
+          if (!result.loading) {
+            loading(false);
+            if (!result.data.Error) {
+              $("#typename").val("");
+              showMessage(
+                "Alright",
+                "Employee type has been added",
+                "success"
+              ).then(() => {
+                showtypes();
+              });
+
+              return;
+            }
+            showMessage("Ooppsss", result.data.msg, "error");
+          }
+        },
+        data
+      );
+    });
 };
 
 const showtypes = () => {

@@ -293,64 +293,66 @@ const showEmployee = () => {
 };
 
 const addEmployee = () => {
-  $("#form-addemployee").submit(function (e) {
-    e.preventDefault();
-    const frmdata = new FormData(this);
-    const data = {
-      uid: frmdata.get("Employeeid"),
-      fname: frmdata.get("firstname"),
-      mname: frmdata.get("middlename"),
-      lname: frmdata.get("lastname"),
-      suffix: frmdata.get("suffix"),
-      type: frmdata.get("manage_employeetype"),
-      pos: frmdata.get("manage_employeeposition"),
-      rate: frmdata.get("employeeRate"),
-      sched: frmdata.get("employeeSchedule"),
-    };
-    if (
-      !inputChecker() &&
-      frmdata.get("manage_employeetype") !== null &&
-      frmdata.get("manage_employeeposition") !== null
-    ) {
-      Fetch(
-        config.addEmployee,
-        "POST",
-        (result) => {
-          console.log(result);
-          const data = result.data;
-          if (result.loading) {
-            loading(true);
-          }
-          if (!result.loading) {
-            loading(false);
-            if (data.Error == false) {
-              $(".manage_employee_modal .modal").css("display", "none");
-              $(".manage_employee_modal .content").css("display", "none");
-              showMessage(
-                "Success",
-                "Employee Added Successfully",
-                "success"
-              ).then(() => {
-                showEmployee();
-              });
-              $("input[type='text']", $("#form-addemployee")).val("");
-              $("#manage_employeetype")
-                .find("option[value='" + 0 + "']")
-                .prop("selected", true);
-              $("#manage_employeeposition")
-                .find("option[value='" + 0 + "']")
-                .prop("selected", true);
-            } else {
-              showMessage("Oopsss", data.msg, "error");
+  $("#form-addemployee")
+    .off("submit")
+    .on("submit", function (e) {
+      e.preventDefault();
+      const frmdata = new FormData(this);
+      const data = {
+        uid: frmdata.get("Employeeid"),
+        fname: frmdata.get("firstname"),
+        mname: frmdata.get("middlename"),
+        lname: frmdata.get("lastname"),
+        suffix: frmdata.get("suffix"),
+        type: frmdata.get("manage_employeetype"),
+        pos: frmdata.get("manage_employeeposition"),
+        rate: frmdata.get("employeeRate"),
+        sched: frmdata.get("employeeSchedule"),
+      };
+      if (
+        !inputChecker() &&
+        frmdata.get("manage_employeetype") !== null &&
+        frmdata.get("manage_employeeposition") !== null
+      ) {
+        Fetch(
+          config.addEmployee,
+          "POST",
+          (result) => {
+            console.log(result);
+            const data = result.data;
+            if (result.loading) {
+              loading(true);
             }
-          }
-        },
-        data
-      );
-    } else {
-      showMessage("Oopss", "Please fill out all fields", "warning");
-    }
-  });
+            if (!result.loading) {
+              loading(false);
+              if (data.Error == false) {
+                $(".manage_employee_modal .modal").css("display", "none");
+                $(".manage_employee_modal .content").css("display", "none");
+                showMessage(
+                  "Success",
+                  "Employee Added Successfully",
+                  "success"
+                ).then(() => {
+                  showEmployee();
+                });
+                $("input[type='text']", $("#form-addemployee")).val("");
+                $("#manage_employeetype")
+                  .find("option[value='" + 0 + "']")
+                  .prop("selected", true);
+                $("#manage_employeeposition")
+                  .find("option[value='" + 0 + "']")
+                  .prop("selected", true);
+              } else {
+                showMessage("Oopsss", data.msg, "error");
+              }
+            }
+          },
+          data
+        );
+      } else {
+        showMessage("Oopss", "Please fill out all fields", "warning");
+      }
+    });
 };
 
 const inputChecker = () => {
