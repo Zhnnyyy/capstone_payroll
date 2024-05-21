@@ -45,7 +45,7 @@
             </li>
             <li class="nav-btn" data-data="manage">
               <i class="far fa-users" data-data="manage"></i>
-              <span data-data="manage">Manage Employe</span>
+              <span data-data="manage">Manage Employee</span>
             </li>
             <li class="nav-btn" data-data="timesheet">
               <i class="far fa-clipboard-list-check" data-data="timesheet"></i>
@@ -142,14 +142,15 @@
             <thead>
               <tr>
                 <th>Employee ID</th>
-                <th>Lastname</th>
-                <th>Firstname</th>
-                <th>Middlename</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
                 <th>Suffix</th>
                 <th>Type</th>
                 <th>Position</th>
                 <th>Rate</th>
                 <th>Schedule</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -192,6 +193,7 @@
                 <th>WorkHours</th>
                 <th>Status</th>
                 <th>Date</th>
+                <td>Control</td>
               </tr>
             </thead>
             <tbody id="timesheetTable"></tbody>
@@ -305,13 +307,13 @@
                   />
                 </div>
                 <div class="input">
-                  <label for="firstname">Firstname</label>
+                  <label for="firstname">First Name</label>
                   <input type="text" name="firstname" id="firstname" />
                 </div>
               </div>
               <div class="input-container input">
                 <div class="input">
-                  <label for="middlename">Middlename</label>
+                  <label for="middlename">Middle Name</label>
                   <input
                     type="text"
                     class="empty"
@@ -320,7 +322,7 @@
                   />
                 </div>
                 <div class="input">
-                  <label for="lastname">Lastname</label>
+                  <label for="lastname">Last Name</label>
                   <input type="text" name="lastname" id="lastname" />
                 </div>
                 <div class="input">
@@ -356,6 +358,14 @@
                   <select name="employeeSchedule" id="employeeSchedule">
                     <!-- <option value="1">Fixed</option>
                     <option value="2">Flexible</option> -->
+                  </select>
+                </div>
+                <div class="input">
+                  <label for="employeeStatus">Status</label>
+                  <select name="employeeStatus" id="employeeStatus">
+                    <option value="" disabled selected>Employee Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
                   </select>
                 </div>
               </div>
@@ -458,6 +468,14 @@
                   <select name="employeeSchedule" id="employeeSchedule">
                     <!-- <option value="1">Fixed</option>
                     <option value="2">Flexible</option> -->
+                  </select>
+                </div>
+                <div class="input">
+                  <label for="employeeStatus">Status</label>
+                  <select name="employeeStatus" id="employeeStatus">
+                    <option value="" disabled selected>Employee Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
                   </select>
                 </div>
               </div>
@@ -723,6 +741,33 @@
         </div>
       </div>
     </div>
+
+    <div class="attendance-modal">
+      <div class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Edit Attendance</h2>
+          </div>
+          <div class="content">
+            <form id="editAttendanceForm">
+              <div class="inputs">
+                <label for="timein">Time in</label>
+                <input type="time" name="timein" id="timein" />
+              </div>
+              <div class="inputs">
+                <label for="timeout">Time out</label>
+                <input type="time" name="timeout" id="timeout" />
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <button type="button" id="attendanceClosemodal">Cancel</button>
+                <button type="button" id="saveAttendance">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="src/js/sweetalert2.min.js"></script>
     <script src="src/js/index.js" type="module"></script>

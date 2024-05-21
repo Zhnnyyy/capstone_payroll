@@ -21,7 +21,7 @@ $(() => {
 
 const is2ndCutoff = () => {
   const cutoff = localStorage.getItem("cutoff");
-  if (cutoff != "26-10") {
+  if (cutoff != "11-25") {
     $(".chckboxdeduct").css("visibility", "hidden");
     return;
   }
@@ -436,9 +436,9 @@ const showTable = () => {
         const name = `${data.Firstname} ${data.Lastname}`;
         const id = data.EmployeeID;
         const raw = await details(id);
-        const SSSRate = (await contributions("SSS")) / 100;
-        const PAGIBIGRate = (await contributions("PAGIBIG")) / 100;
-        const PHILHEALTHRate = (await contributions("PHILHEALTH")) / 100;
+        const SSSRate = await contributions("SSS");
+        const PAGIBIGRate = await contributions("PAGIBIG");
+        const PHILHEALTHRate = await contributions("PHILHEALTH");
         const allowance = raw.allowance == null ? 0 : parseFloat(raw.allowance);
         const adjustment =
           raw.adjustment == null ? 0 : parseFloat(raw.adjustment);
@@ -478,16 +478,14 @@ const showTable = () => {
           parseInt(allowance) +
           parseFloat(txt_SpecHolidayPay) +
           parseFloat(txt_RegHolidayPay);
-        console.log(raw);
         const grosspay = txt_basicpay + txt_totalearnings;
         const lastgrosspay = raw.lastgrosspay;
         const total_gross =
           parseFloat(grosspay) + parseFloat(lastgrosspay.replace(/₱/g, ""));
-        let txtPagibig = total_gross * PAGIBIGRate;
-        let txtphilhealth = total_gross * PHILHEALTHRate;
-        let txtsss = total_gross * SSSRate;
+        let txtPagibig = PAGIBIGRate;
+        let txtphilhealth = PHILHEALTHRate;
+        let txtsss = SSSRate;
         let txtTax = EmployeeTax(total_gross);
-        console.log(total_gross);
         if (!$("#chckbox").is(":checked")) {
           txtPagibig = 0;
           txtphilhealth = 0;

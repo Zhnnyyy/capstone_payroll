@@ -137,7 +137,6 @@ const updateRequest = (id, date1, date2, employee, status) => {
         loading(true);
       }
       if (!result.loading) {
-        console.log(result);
         loading(false);
         const res = result.data;
         if (res.Error == false) {

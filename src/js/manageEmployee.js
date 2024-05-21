@@ -115,6 +115,12 @@ const showEmployee = () => {
       loading(false);
       const data = result.data;
       $.each(data, function (index, data) {
+        let td = "";
+        if (data.Status == "Active") {
+          td = `<td class='Active'>${data.Status}</td>`;
+        } else {
+          td = `<td class='Inactive'>${data.Status}</td>`;
+        }
         tbl.append(
           "<tr>" +
             "<td>" +
@@ -144,6 +150,7 @@ const showEmployee = () => {
             "<td>" +
             data.Schedule +
             "</td>" +
+            td +
             "<td class='btn-grp'>" +
             "<button class='manage-edit' data-positionid='" +
             data.PositionID +
@@ -159,6 +166,8 @@ const showEmployee = () => {
             data.Suffix +
             "' data-rate='" +
             data.rateID +
+            "' data-status='" +
+            data.Status +
             "' data-sched='" +
             data.schedID +
             "'  data-id=" +
@@ -227,6 +236,7 @@ const showEmployee = () => {
     const suffix = $(this).data("suffix");
     const rate = $(this).data("rate");
     const sched = $(this).data("sched");
+    const status = $(this).data("status");
     $(".edit_employee_modal .modal").css("display", "block");
     $(".edit_employee_modal .content").css("display", "block");
 
@@ -239,6 +249,7 @@ const showEmployee = () => {
     $(".edit_employee_modal #manage_employeeposition").val(position);
     $(".edit_employee_modal #employeeRate").val(rate);
     $(".edit_employee_modal #employeeSchedule").val(sched);
+    $(".edit_employee_modal #employeeStatus").val(status);
   });
   $("#form-editemployee").submit(function (e) {
     e.preventDefault();
@@ -253,6 +264,7 @@ const showEmployee = () => {
       pos: frmdata.get("manage_employeeposition"),
       rate: frmdata.get("employeeRate"),
       sched: frmdata.get("employeeSchedule"),
+      status: frmdata.get("employeeStatus"),
     };
     showOptions("Are you sure?", "", "warning", () => {
       Fetch(
@@ -308,6 +320,7 @@ const addEmployee = () => {
         pos: frmdata.get("manage_employeeposition"),
         rate: frmdata.get("employeeRate"),
         sched: frmdata.get("employeeSchedule"),
+        status: frmdata.get("employeeStatus"),
       };
       if (
         !inputChecker() &&

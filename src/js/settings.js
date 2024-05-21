@@ -54,29 +54,37 @@ const contribution = () => {
       const data = result.data;
       $.each(data, (i, res) => {
         if (res.Name == "SSS") {
-          sss.val(`${res.Value}%`);
+          sss.val(`${res.Value}`);
         }
         if (res.Name == "PAGIBIG") {
-          pagibig.val(`${res.Value}%`);
+          pagibig.val(`${res.Value}`);
         }
         if (res.Name == "PHILHEALTH") {
-          philhealth.val(`${res.Value}%`);
+          philhealth.val(`${res.Value}`);
         }
       });
     }
   });
 
   $("#updateContributionBtn").click(() => {
-    const sss = $("#sss").val().replace(/%/g, "");
-    const pagibig = $("#pagibig").val().replace(/%/g, "");
-    const philhealth = $("#philhealth").val().replace(/%/g, "");
+    const sss = $("#sss").val();
+    const pagibig = $("#pagibig").val();
+    const philhealth = $("#philhealth").val();
     const data = {
       sss: sss,
       pagibig: pagibig,
       philhealth: philhealth,
     };
-    if (isNaN(sss) || isNaN(pagibig) || isNaN(pagibig)) {
-      showMessage("Oppsss", "Check your input", "warning");
+
+    if (
+      (typeof sss !== "number" && isNaN(sss)) ||
+      (typeof pagibig !== "number" && isNaN(pagibig)) ||
+      (typeof philhealth !== "number" && isNaN(philhealth))
+    ) {
+      showMessage("Oppsss", "Check your input", "warning").then(() => {
+        contribution();
+      });
+
       return;
     }
     Fetch(

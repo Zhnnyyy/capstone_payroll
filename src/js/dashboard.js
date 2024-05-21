@@ -17,7 +17,6 @@ const dashboardDetails = () => {
     if (!result.loading) {
       loading(false);
       const data = result.data;
-      console.log(data);
       $("#employee").html(data.employee);
       $("#attendance").html(data.attendance);
       $("#request").html(data.request);
@@ -32,7 +31,6 @@ const dashboardDetails = () => {
         yearHoliday.push({ name: res.name, date: res.date });
       });
       const tbl = $(".right-container").empty();
-      console.log(yearHoliday);
       $.each(yearHoliday, (i, res) => {
         tbl.append(
           `<div class="holiday-container">

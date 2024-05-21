@@ -32,9 +32,10 @@
 //   payrollLogs: "http://localhost:3000/payroll/logs",
 //   payrollCutoffLogs: "http://localhost:3000/payroll/cutoff/logs",
 //   deleteCutoff: "http://localhost:3000/payroll/cutoff/delete",
-
 //   requesthistory: "http://localhost:3000/employee/request/history",
 //   dashboardDetails: "http://localhost:3000/dashboard",
+
+//   updateAttendance: "http://localhost:3000/attendance/update",
 // };
 const config = {
   showEmployee: "https://capstone-qx2y.onrender.com/employee/list",
@@ -76,6 +77,8 @@ const config = {
   deleteCutoff: "https://capstone-qx2y.onrender.com/payroll/cutoff/delete",
   requesthistory: "https://capstone-qx2y.onrender.com/employee/request/history",
   dashboardDetails: "https://capstone-qx2y.onrender.com/dashboard",
+
+  updateAttendance: "https://capstone-qx2y.onrender.com/attendance/update",
 };
 
 export default config;

@@ -299,6 +299,18 @@ table tbody tr:last-child {
 .attendance .table-container {
   max-height: 85vh;
 }
+.attendance td:last-of-type {
+  text-align: center;
+}
+.attendance td button {
+  padding: 7px;
+  background-color: #eaaa00;
+  border-radius: 3px;
+  color: #0b1318;
+  border: none;
+}
+
+
 
 /* TIMESHEET */
 .timesheet .header {
@@ -525,6 +537,33 @@ table tbody tr:last-child {
   background-color: #eaaa00;
   color: black;
   font-weight: bold;
+}
+.Active {
+  color: green;
+  font-weight: bold;
+}
+.Inactive {
+  color: maroon;
+  font-weight: bold;
+}
+select {
+  margin-top: 10px;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+}
+
+select:focus {
+  border-color: var(--accent);
 }
 @media only screen and (max-width: 1200px) {
   .manage {
