@@ -42,7 +42,7 @@ const deduct = () => {
 };
 
 const generatePayroll = () => {
-  $("#genPayroll").click(() => {
+  $("#genPayroll").off("click").on("click",() => {
     let employee = [];
     $.each($(".payroll-table tr"), function () {
       const ID = $(this).find("td").eq(1).text();
@@ -159,7 +159,7 @@ const populateEmployee = () => {
 };
 
 const ModaladdAllowance = () => {
-  $("#modal_addAllowance").click(() => {
+  $("#modal_addAllowance").off("click").on("click",() => {
     $(".additional_modal .modal").css("display", "block");
     $("#targetText").html("Add Allowance");
     $(".additional-table").empty();
@@ -169,7 +169,7 @@ const ModaladdAllowance = () => {
 };
 
 const ModaladdDeduction = () => {
-  $("#modal_addDeduction").click(() => {
+  $("#modal_addDeduction").off("click").on("click",() => {
     $(".additional_modal .modal").css("display", "block");
     $("#targetText").html("Add Deduction");
     $(".additional-table").empty();
@@ -179,7 +179,7 @@ const ModaladdDeduction = () => {
 };
 
 const ModaladdAdjustment = () => {
-  $("#modal_addAdjustment").click(() => {
+  $("#modal_addAdjustment").off("click").on("click",() => {
     $(".additional_modal .modal").css("display", "block");
     $("#targetText").html("Add Adjustment");
     $(".additional-table").empty();
@@ -207,7 +207,7 @@ $("#dropdownEmployee").on("change", () => {
   }
 });
 const addModalItem = () => {
-  $("#add-modal-item").click(() => {
+  $("#add-modal-item").off("click").on("click",() => {
     const target = $("#targetText").html();
     const name = $("#name").val();
     const amount = $("#amount").val();
@@ -592,9 +592,10 @@ const showTable = () => {
           $(this).addClass("active");
         });
       }, 1000);
-      loading(false);
+      
     }
   });
+loading(false);
 };
 
 async function contributions(target) {
