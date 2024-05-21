@@ -282,6 +282,9 @@ table tbody tr:last-child {
 .attendance .inputs {
   font-weight: 500;
 }
+.isrequired {
+  color: red;
+}
 .attendance input {
   height: 30px;
   width: 120px;
@@ -309,8 +312,6 @@ table tbody tr:last-child {
   color: #0b1318;
   border: none;
 }
-
-
 
 /* TIMESHEET */
 .timesheet .header {
@@ -564,6 +565,11 @@ select {
 
 select:focus {
   border-color: var(--accent);
+}
+
+.dashboard .calendar-container {
+  padding: 20px;
+  height: 500px;
 }
 @media only screen and (max-width: 1200px) {
   .manage {

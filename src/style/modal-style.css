@@ -63,6 +63,7 @@
   border-radius: 5px;
   border: 1px solid #ccc;
 }
+
 .manage_employee_modal .content .input select,
 .manage_employee_modal .content .input select option {
   font-size: 13px;

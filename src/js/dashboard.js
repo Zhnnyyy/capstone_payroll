@@ -2,8 +2,34 @@ import { showMessage, showOptions, loading } from "./model/MyAlert.js";
 import { Fetch } from "./model/bridge.js";
 import config from "./model/config.js";
 
-$(() => {
+$(document).ready(async function () {
   dashboardDetails();
+  Fetch(config.holidays, "GET", (result) => {
+    let events = [];
+    if (!result.loading) {
+      const data = result.data;
+      $.each(data.Regular_Holidays, (i, res) => {
+        events.push({ start: res.date, title: res.name });
+      });
+
+      $.each(data.Special_Holidays, (i, res) => {
+        events.push({ start: res.date, title: res.name });
+      });
+      mCalendar(events);
+    }
+  });
+
+  function mCalendar(events) {
+    var calendarEl = document.getElementById("calendar");
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      height: "auto",
+      events: events,
+    });
+
+    calendar.render();
+  }
 });
 export function DashboardFunction() {
   dashboardDetails();
