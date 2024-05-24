@@ -38,7 +38,101 @@ const toggleContent = (target) => {
       showContent(".contribution");
       contribution();
       break;
+    case "leavetypes":
+      showContent(".leavetypes");
+      leaveTypes();
+      break;
   }
+};
+const leaveTypes = () => {
+  showLeaveTypes();
+  addLeaveTypes();
+};
+
+const showLeaveTypes = async () => {
+  $("#leavename").val("");
+  $("#leaveValue").val("");
+  Fetch(config.showLeavetypes, "GET", (result) => {
+    if (result.loading) {
+      loading(true);
+    }
+    if (!result.loading) {
+      loading(false);
+      const tbl = $(".leavetypes-table").empty();
+      let count = 0;
+      $.each(result.data, (i, data) => {
+        count++;
+        tbl.append(
+          ` <tr>
+          <td>${count}</td>
+          <td>${data.Name}</td>
+          <td>${data.Credit}</td>
+          <td><div class='remove-leavetypes-btn' data-id='${data.id}'>
+          <i class='fa-solid fa-xmark'></i>
+          </div></td>
+        </tr>`
+        );
+      });
+    }
+
+    $(".remove-leavetypes-btn")
+      .off("click")
+      .on("click", function () {
+        let id = $(this).data("id");
+        showOptions("Warning", "Are you sure?", "warning", () => {
+          removeItem("leavetypes", id, showLeaveTypes);
+        });
+      });
+  });
+};
+
+const addLeaveTypes = async () => {
+  $("#addLeavetypes")
+    .off("click")
+    .on("click", () => {
+      const name = $("#leavename").val();
+      const credit = $("#leaveValue").val();
+      if (name == "" || credit == "") {
+        showOptions("Warning", "Please fill all the fields", "warning");
+        return;
+      }
+      if (
+        isNaN($("#leaveValue").val()) &&
+        typeof $("#leaveValue").val() !== "number"
+      ) {
+        showMessage("Error", "Please enter a valid number", "error");
+        $("#leaveValue").val("");
+        return;
+      }
+      const data = {
+        name: $("#leavename").val(),
+        value: $("#leaveValue").val(),
+      };
+      Fetch(
+        config.addLeaveTypes,
+        "POST",
+        (result) => {
+          if (result.loading) {
+            loading(true);
+          }
+          if (!result.loading) {
+            loading(false);
+            const data = result.data;
+            if (!data.Error) {
+              showMessage("Success", "Item has been added", "success").then(
+                () => {
+                  showLeaveTypes();
+                }
+              );
+              return;
+            }
+
+            showMessage("Error", data.msg, "error");
+          }
+        },
+        data
+      );
+    });
 };
 
 const contribution = () => {

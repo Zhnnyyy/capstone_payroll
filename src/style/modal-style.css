@@ -343,6 +343,9 @@
 .settings-container .contribution {
   display: none;
 }
+.settings-container .leavetypes {
+  display: none;
+}
 .remove-items-btn {
   color: red;
 }
