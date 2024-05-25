@@ -164,7 +164,7 @@ setInterval(() => {
   ) {
     loadTables();
   }
-}, 1000);
+}, 10000);
 
 const onChangeDate = () => {
   $("#endDate").on("change", () => {

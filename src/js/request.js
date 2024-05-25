@@ -28,6 +28,7 @@ const history = () => {
             <td>${data.name}</td>
             <td>${data.startDate}</td>
             <td>${data.endDate}</td>
+            <td>${data.types}</td>
             <td>${data.status}</td>
             <td>${data.Date}</td>
           </tr>`
@@ -114,7 +115,7 @@ const loadLeaveRequestTable = () => {
         "You cannot revert this action",
         "warning",
         () => {
-          updateRequest(data, "Rejected");
+          updateRequest(data, null, null, null, "Rejected");
         }
       );
     });

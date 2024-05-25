@@ -38,6 +38,8 @@
 
 //   showLeavetypes: "http://localhost:3000/employee/leavetypes",
 //   addLeaveTypes: "http://localhost:3000/employee/leavetypes/add",
+//   changeEmployeePass: "http://localhost:3000/mobile/forgotpass/new",
+//   employeeInfo: "http://localhost:3000/employee/information",
 // };
 const config = {
   showEmployee: "https://capstone-qx2y.onrender.com/employee/list",
@@ -83,6 +85,9 @@ const config = {
 
   showLeavetypes: "https://capstone-qx2y.onrender.com/employee/leavetypes",
   addLeaveTypes: "https://capstone-qx2y.onrender.com/employee/leavetypes/add",
+  changeEmployeePass:
+    "https://capstone-qx2y.onrender.com/mobile/forgotpass/new",
+  employeeInfo: "https://capstone-qx2y.onrender.com/employee/information",
 };
 
 export default config;
