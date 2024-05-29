@@ -5,7 +5,13 @@ import { RequestFunction } from "./request.js";
 import { PayrollFunction } from "./payroll.js";
 import { SettingsFunction } from "./settings.js";
 import { DashboardFunction } from "./dashboard.js";
+import { showOptions } from "./model/MyAlert.js";
 $(() => {
+  if (!localStorage.getItem("isLoggedIn")) {
+    window.location.href = "index.html";
+    return;
+  }
+  logout();
   $(".toggle").click(() => {
     $(".sidebar").toggleClass("close");
     $(".toggle").toggleClass("toggle-close");
@@ -17,7 +23,17 @@ $(() => {
   tabBtn();
   openSettings();
   closeSettings();
+  DashboardFunction();
 });
+
+const logout = () => {
+  $("#signout").click(() => {
+    showOptions("You want to logout?", "", "info", () => {
+      localStorage.removeItem("isLoggedIn");
+      window.location.href = "index.html";
+    });
+  });
+};
 
 const btnAct = () => {
   $(".nav-btn").click(function (e) {

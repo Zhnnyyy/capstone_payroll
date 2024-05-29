@@ -35,12 +35,13 @@
 //   requesthistory: "http://localhost:3000/employee/request/history",
 //   dashboardDetails: "http://localhost:3000/dashboard",
 //   updateAttendance: "http://localhost:3000/attendance/update",
-
 //   showLeavetypes: "http://localhost:3000/employee/leavetypes",
 //   addLeaveTypes: "http://localhost:3000/employee/leavetypes/add",
 //   changeEmployeePass: "http://localhost:3000/mobile/forgotpass/new",
 //   employeeInfo: "http://localhost:3000/employee/information",
+//   login: "http://localhost:3000/payroll/login",
 // };
+
 const config = {
   showEmployee: "https://capstone-qx2y.onrender.com/employee/list",
   showTypes: "https://capstone-qx2y.onrender.com/employee/types",
@@ -88,6 +89,7 @@ const config = {
   changeEmployeePass:
     "https://capstone-qx2y.onrender.com/mobile/forgotpass/new",
   employeeInfo: "https://capstone-qx2y.onrender.com/employee/information",
+  login: "https://capstone-qx2y.onrender.com/payroll/login",
 };
 
 export default config;

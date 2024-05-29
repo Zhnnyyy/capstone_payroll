@@ -11,14 +11,14 @@ export function PayrollFunction() {
     Swal.fire({
       title: "Payroll Cut Off",
       html:
-        "<center>First Cutoff : 11-25</center>" +
-        "<center>Second Cutoff : 26-10</center>" +
+        "<center>First Cutoff : 26-10</center>" +
+        "<center>Second Cutoff : 11-25</center>" +
         '<label for="date1">Start Date</label>' +
         '<input id="date1" class="swal2-input" type="date"><br>' +
         '<label for="date2">End Date</label>' +
         '<input id="date2" class="swal2-input" type="date">',
       showCancelButton: true,
-      confirmButtonText: "Look up",
+      confirmButtonText: "Next",
       showLoaderOnConfirm: true,
       preConfirm: async () => {
         const date1 = document.getElementById("date1").value;

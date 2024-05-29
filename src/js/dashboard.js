@@ -4,6 +4,20 @@ import config from "./model/config.js";
 
 $(document).ready(async function () {
   dashboardDetails();
+  makecalendar();
+});
+export function DashboardFunction() {
+  $("#dashboardContetn").css("display", "block");
+  if (document.readyState === "loading") {
+    addEventListener("DOMContentLoaded", function (e) {
+      dashboardDetails();
+    });
+  } else {
+    makecalendar();
+  }
+}
+
+const makecalendar = () => {
   Fetch(config.holidays, "GET", (result) => {
     let events = [];
     if (!result.loading) {
@@ -30,10 +44,7 @@ $(document).ready(async function () {
 
     calendar.render();
   }
-});
-export function DashboardFunction() {
-  dashboardDetails();
-}
+};
 
 const dashboardDetails = () => {
   Fetch(config.dashboardDetails, "GET", (result) => {
