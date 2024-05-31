@@ -71,6 +71,22 @@ export function PayrollFunction() {
   });
 
   loadLogs();
+
+  setInterval(async () => {
+    let defaultCount = localStorage.getItem("payrollcount");
+    const count = await fetch(config.payrollLogs, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!count.ok) throw new console.error("Cannot connect to server");
+    const result = await count.json();
+    if (result.length != defaultCount) {
+      localStorage.setItem("payrollcount", result.length);
+      loadLogs();
+    }
+  }, 3000);
 }
 const loadLogs = () => {
   Fetch(config.payrollLogs, "GET", (result) => {
@@ -80,6 +96,7 @@ const loadLogs = () => {
     if (!result.loading) {
       loading(false);
       const data = result.data;
+      localStorage.setItem("payrollcount", data.length);
       const table = $(".payroll-details").empty();
       $.each(data, (i, res) => {
         table.append(

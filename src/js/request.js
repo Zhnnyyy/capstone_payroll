@@ -7,6 +7,22 @@ import config from "./model/config.js";
 export function RequestFunction() {
   loadLeaveRequestTable();
   history();
+
+  setInterval(async () => {
+    let defaultCount = localStorage.getItem("requestCount");
+    const count = await fetch(config.employeeRequest, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!count.ok) throw new console.error("Cannot connect to server");
+    const result = await count.json();
+    if (result.length != defaultCount) {
+      localStorage.setItem("payrollcount", result.length);
+      loadLeaveRequestTable();
+    }
+  }, 3000);
 }
 
 const history = () => {
@@ -51,6 +67,7 @@ const loadLeaveRequestTable = () => {
     if (!result.loading) {
       loading(false);
       const res = result.data;
+      localStorage.setItem("requestCount", res.length);
       const tbl = $("#leaverequesttbl").empty();
       $.each(res, (index, data) => {
         tbl.append(

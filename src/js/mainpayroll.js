@@ -134,7 +134,9 @@ const generatePayroll = () => {
                   )}`,
                   "Payroll has been created",
                   "success"
-                ).then(() => {});
+                ).then(() => {
+                  localStorage.setItem("setPayroll", false);
+                });
               }
             },
             PayrollDetails
@@ -444,18 +446,20 @@ const EmployeeTax = (totalgrosspay) => {
 };
 
 const showTable = () => {
-  Fetch(config.showEmployee, "GET", (result) => {
+  Fetch(config.payrollEmployee, "GET", (result) => {
     const tbl = $(".payroll-table").empty();
     if (result.loading) {
       loading(true);
     }
     if (!result.loading) {
       const data = result.data;
+      const rowresult = data.length;
       var count = 0;
       $.each(data, async (i, data) => {
         const name = `${data.Firstname} ${data.Lastname}`;
         const id = data.EmployeeID;
         const raw = await details(id);
+        console.log(raw);
         const SSSRate = await contributions("SSS");
         const PAGIBIGRate = await contributions("PAGIBIG");
         const PHILHEALTHRate = await contributions("PHILHEALTH");
@@ -604,17 +608,19 @@ const showTable = () => {
             "</td>" +
             "</tr>"
         );
+        if (rowresult == tbl.find("tr").length) {
+          loading(false);
+        }
       });
 
-      setTimeout(() => {
+      if (tbl.find("tr")) {
         $(".table-container table tbody tr").on("click", function () {
           $(".table-container table tbody tr").removeClass("active");
           $(this).addClass("active");
         });
-      }, 1000);
+      }
     }
   });
-  loading(false);
 };
 
 async function contributions(target) {

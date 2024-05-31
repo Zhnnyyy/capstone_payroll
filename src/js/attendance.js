@@ -17,6 +17,8 @@ const loadTables = () => {
       const res = result.data;
       const tbl = $("#timesheetTable").empty();
       $.each(res, (index, data) => {
+        const mtimein = data.TimeIn == null ? "--" : data.TimeIn;
+        const mtimeout = data.TimeOut == null ? "--" : data.TimeOut;
         tbl.append(
           "<tr>" +
             "<td>" +
@@ -26,10 +28,10 @@ const loadTables = () => {
             data.name +
             "</td>" +
             "<td>" +
-            data.TimeIn +
+            mtimein +
             "</td>" +
             "<td>" +
-            data.TimeOut +
+            mtimeout +
             "</td>" +
             "<td>" +
             wrkhrs(data.WorkHours) +
