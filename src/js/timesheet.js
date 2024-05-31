@@ -5,7 +5,7 @@ import config from "./model/config.js";
 export async function TimesheetFunction() {
   loadEmployee();
   onChangeDate();
-  $("#timesheetSearch").on("input", function () {
+  $("#timesheetSearch").on("change", function () {
     const data = $(this).val();
     loadFiltered(data);
   });

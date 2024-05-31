@@ -11,10 +11,28 @@ export function ManageFunction() {
   loadDropdownSchedule();
   addEmployee();
 
-  $("#search").on("input", function () {
-    let data = $(this).val();
-    showEmployeeFiltered(data);
-  });
+  // $("#search")
+  //   .off("input")
+  //   .on("input", function () {
+  //     let data = $(this).val();
+  //     if (data.length == 0) {
+  //       showEmployee();
+  //       return;
+  //     }
+  //   });
+
+  $("#search")
+    .off("change")
+    .on("change", function () {
+      let data = $(this).val();
+      if (data.length == 0) {
+        showEmployee();
+        return;
+      }
+      const tbl = $("#row-manageEmployee").empty();
+      showEmployeeFiltered(data);
+      return;
+    });
 }
 const showEmployeeFiltered = (id) => {
   const UID = {
@@ -534,6 +552,7 @@ const addEmployee = () => {
         sched: frmdata.get("employeeSchedule"),
         status: frmdata.get("employeeStatus"),
       };
+      console.log(JSON.stringify(data));
       if (
         !inputChecker() &&
         frmdata.get("manage_employeetype") !== null &&
