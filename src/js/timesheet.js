@@ -7,6 +7,7 @@ export async function TimesheetFunction() {
   onChangeDate();
   $("#timesheetSearch").on("change", function () {
     const data = $(this).val();
+    $("#timesheet-table").empty();
     loadFiltered(data);
   });
 }
