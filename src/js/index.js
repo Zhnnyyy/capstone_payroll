@@ -20,7 +20,7 @@ $(() => {
   AddEmployeeOpenModal();
   AddEmployeeCloseModal();
   btnAct();
-  tabBtn();
+  // tabBtn();
   openSettings();
   closeSettings();
   DashboardFunction();
@@ -42,15 +42,6 @@ const btnAct = () => {
     $(this).addClass("active");
     menuBtn($(e.target).data("data"));
   });
-};
-
-const tabBtn = () => {
-  // $(".tab-btn").click(function (e) {
-  //   e.preventDefault();
-  //   $(".tab-btn").removeClass("activetab");
-  //   $(this).addClass("activetab");
-  //   tabMenu($(e.target).data("tab"));
-  // });
 };
 
 const AddEmployeeOpenModal = () => {

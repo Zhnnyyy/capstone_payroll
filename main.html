@@ -143,9 +143,21 @@
         </div>
       </div>
       <div class="manage content">
-        <button class="addEmployee" id="add_employee">
-          <i class="fa-solid fa-plus"></i> Add Employee
-        </button>
+        <div class="controls">
+          <button class="addEmployee" id="add_employee">
+            <i class="fa-solid fa-plus"></i> Add Employee
+          </button>
+          <div class="searchBox">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search"
+              autocomplete="off"
+            />
+          </div>
+        </div>
         <div class="table-container">
           <table>
             <thead>
@@ -169,13 +181,25 @@
       </div>
       <div class="timesheet content">
         <div class="header">
-          <div class="inputs">
-            <label for="startDate">Starting Date:</label>
-            <input type="date" name="startDate" id="timesheetstartDate" />
+          <div class="sample">
+            <div class="inputs">
+              <label for="startDate">Starting Date:</label>
+              <input type="date" name="startDate" id="timesheetstartDate" />
+            </div>
+            <div class="inputs">
+              <label for="endDate">End Date:</label>
+              <input type="date" name="endDate" id="timesheetendDate" />
+            </div>
           </div>
-          <div class="inputs">
-            <label for="endDate">End Date:</label>
-            <input type="date" name="endDate" id="timesheetendDate" />
+          <div class="searchBox">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              name="search"
+              id="timesheetSearch"
+              placeholder="Search"
+              autocomplete="off"
+            />
           </div>
         </div>
         <div class="table-container" id="timesheet-table"></div>

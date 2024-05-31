@@ -145,6 +145,7 @@
                 }
                 showMessage("Success", "Login Success", "success").then(() => {
                   localStorage.setItem("isLoggedIn", true);
+                  localStorage.setItem("setPayroll", false);
                   window.location.href = "main.html";
                 });
               }

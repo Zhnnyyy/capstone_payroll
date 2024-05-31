@@ -61,6 +61,7 @@ export function PayrollFunction() {
           localStorage.setItem("startDate", result.value.startDate);
           localStorage.setItem("endDate", result.value.endDate);
           localStorage.setItem("cutoff", `${startDay}-${endDay}`);
+          localStorage.setItem("setPayroll", true);
           window.open(`payroll.html`, "_blank");
         } else {
           showMessage("Oopss", "Incorrect Cutoff", "info");

@@ -4,7 +4,101 @@ import config from "./model/config.js";
 
 export async function TimesheetFunction() {
   loadEmployee();
+  onChangeDate();
+  $("#timesheetSearch").on("input", function () {
+    const data = $(this).val();
+    loadFiltered(data);
+  });
 }
+const loadFiltered = (data) => {
+  const UID = {
+    id: data,
+  };
+  const table = $("#timesheet-table").empty();
+  Fetch(
+    config.timesheetEmployeeFiltered,
+    "POST",
+    (result) => {
+      // if (result.loading) {
+      //   loading(true);
+      // }
+      if (!result.loading) {
+        // loading(false);
+        const data = result.data;
+        $.each(data, (index, data) => {
+          table.append(
+            "<details data-id='" +
+              data.EmployeeID +
+              "' class='myindex'>" +
+              "<summary>" +
+              "<div class='parent'>" +
+              "<div class='child-parent'>" +
+              "<div class='left'>" +
+              data.name +
+              "</div>" +
+              "<div class='right'>" +
+              `${data.Rate} | ${data.Schedule}` +
+              "</div>" +
+              "</div>" +
+              "</div>" +
+              "</summary>" +
+              "<div class='other-details'>" +
+              "</div>" +
+              "</details>"
+          );
+        });
+      }
+
+      $(".myindex").on("click", function () {
+        const id = $(this).data("id");
+        if (!$(this).prop("open")) {
+          let date1 = $("#timesheetstartDate").val();
+          let date2 = $("#timesheetendDate").val();
+          if (date1.length == 0 || date2.length == 0) {
+            showMessage("Oopss", "Please select date first", "info");
+            $(this).prop("open", true);
+            return;
+          }
+        }
+        if (!$(this).prop("open")) {
+          const data = {
+            uid: id,
+            date1: $("#timesheetstartDate").val(),
+            date2: $("#timesheetendDate").val(),
+          };
+          const content = $(this).find(".other-details");
+          Fetch(
+            config.timesheetDetails,
+            "POST",
+            (result) => {
+              if (result.loading) {
+                loading(true);
+              }
+              if (!result.loading) {
+                loading(false);
+                const raw = result.data;
+                console.log(raw);
+                loadDetails(
+                  content,
+                  raw.leave,
+                  raw.overtime,
+                  raw.wrkdays,
+                  raw.wrkhrs,
+                  raw.table,
+                  raw.overtimeHrs,
+                  raw.undertime,
+                  raw.undertimeHrs
+                );
+              }
+            },
+            data
+          );
+        }
+      });
+    },
+    UID
+  );
+};
 const loadEmployee = () => {
   const table = $("#timesheet-table").empty();
   Fetch(config.timesheetEmployee, "GET", (result) => {
@@ -121,6 +215,45 @@ function dayType(date) {
       return "Regular";
     });
 }
+
+const onChangeDate = () => {
+  $("#timesheetendDate").on("change", () => {
+    let startDate = $("#timesheetstartDate").val();
+    let endDate = $("#timesheetendDate").val();
+    let validate1 = false;
+    let validate2 = false;
+    if (endDate) {
+      if (startDate.length == 0) {
+        showMessage("Oppsss", "Please select start date first!", "info").then(
+          () => {
+            $("#timesheetendDate").val("");
+            return;
+          }
+        );
+      } else {
+        validate1 = true;
+      }
+      if (startDate > endDate) {
+        showMessage(
+          "Oppsss",
+          "End date should be greater than start date!",
+          "info"
+        ).then(() => {
+          $("#timesheetendDate").val("");
+          return;
+        });
+      } else {
+        validate2 = true;
+      }
+
+      // if (validate1 && validate2) {
+      //   loadFilteredTable(startDate, endDate);
+      // } else {
+      //   loadTables();
+      // }
+    }
+  });
+};
 
 const loadDetails = (
   element,

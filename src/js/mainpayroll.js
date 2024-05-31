@@ -3,6 +3,16 @@ import { showMessage, showOptions, loading } from "./model/MyAlert.js";
 import config from "./model/config.js";
 
 $(() => {
+  if (!localStorage.getItem("setPayroll")) {
+    showMessage("Warning", "Prohibited Action", "info").then(() => {
+      if (!localStorage.getItem("isLoggedIn")) {
+        window.location.href = "main.html";
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+    return;
+  }
   $("#title").html(
     `Payroll Cutoff: ${localStorage.getItem(
       "startDate"
@@ -42,94 +52,96 @@ const deduct = () => {
 };
 
 const generatePayroll = () => {
-  $("#genPayroll").off("click").on("click",() => {
-    let employee = [];
-    $.each($(".payroll-table tr"), function () {
-      const ID = $(this).find("td").eq(1).text();
-      const rate = $(this).find("td").eq(4).text();
-      const wrkdays = $(this).find("td").eq(6).text();
-      const undertime = $(this).find("td").eq(7).text();
-      const leave = $(this).find("td").eq(8).text();
-      const basicpay = $(this).find("td").eq(9).text();
-      const regularholiday = $(this).find("td").eq(10).text();
-      const regularPay = $(this).find("td").eq(11).text();
-      const specialHoliday = $(this).find("td").eq(12).text();
-      const specialPay = $(this).find("td").eq(13).text();
-      const overtimeHrs = $(this).find("td").eq(15).text();
-      const overtimePay = $(this).find("td").eq(16).text();
-      const allowance = $(this).find("td").eq(17).text();
-      const salaryAdjustment = $(this).find("td").eq(18).text();
-      const totalearnings = $(this).find("td").eq(19).text();
-      const grosspay = $(this).find("td").eq(20).text();
-      const pagibig = $(this).find("td").eq(21).text();
-      const philhealth = $(this).find("td").eq(22).text();
-      const sss = $(this).find("td").eq(23).text();
-      const tax = $(this).find("td").eq(24).text();
-      const deduction = $(this).find("td").eq(25).text();
-      const totaldeduct = $(this).find("td").eq(26).text();
-      const netpay = $(this).find("td").eq(27).text();
+  $("#genPayroll")
+    .off("click")
+    .on("click", () => {
+      let employee = [];
+      $.each($(".payroll-table tr"), function () {
+        const ID = $(this).find("td").eq(1).text();
+        const rate = $(this).find("td").eq(4).text();
+        const wrkdays = $(this).find("td").eq(6).text();
+        const undertime = $(this).find("td").eq(7).text();
+        const leave = $(this).find("td").eq(8).text();
+        const basicpay = $(this).find("td").eq(9).text();
+        const regularholiday = $(this).find("td").eq(10).text();
+        const regularPay = $(this).find("td").eq(11).text();
+        const specialHoliday = $(this).find("td").eq(12).text();
+        const specialPay = $(this).find("td").eq(13).text();
+        const overtimeHrs = $(this).find("td").eq(15).text();
+        const overtimePay = $(this).find("td").eq(16).text();
+        const allowance = $(this).find("td").eq(17).text();
+        const salaryAdjustment = $(this).find("td").eq(18).text();
+        const totalearnings = $(this).find("td").eq(19).text();
+        const grosspay = $(this).find("td").eq(20).text();
+        const pagibig = $(this).find("td").eq(21).text();
+        const philhealth = $(this).find("td").eq(22).text();
+        const sss = $(this).find("td").eq(23).text();
+        const tax = $(this).find("td").eq(24).text();
+        const deduction = $(this).find("td").eq(25).text();
+        const totaldeduct = $(this).find("td").eq(26).text();
+        const netpay = $(this).find("td").eq(27).text();
 
-      employee.push({
-        ID: ID,
-        rate: rate,
-        wrkdays: wrkdays,
-        undertime: undertime,
-        leave: leave,
-        basicpay: basicpay,
-        regularholiday: regularholiday,
-        regularPay: regularPay,
-        specialHoliday: specialHoliday,
-        specialPay: specialPay,
-        overtimeHrs: overtimeHrs,
-        overtimePay: overtimePay,
-        allowance: allowance,
-        salaryAdjustment: salaryAdjustment,
-        totalearnings: totalearnings,
-        grosspay: grosspay,
-        pagibig: pagibig,
-        philhealth: philhealth,
-        sss: sss,
-        tax: tax,
-        deduction: deduction,
-        totaldeduct: totaldeduct,
-        netpay: netpay,
+        employee.push({
+          ID: ID,
+          rate: rate,
+          wrkdays: wrkdays,
+          undertime: undertime,
+          leave: leave,
+          basicpay: basicpay,
+          regularholiday: regularholiday,
+          regularPay: regularPay,
+          specialHoliday: specialHoliday,
+          specialPay: specialPay,
+          overtimeHrs: overtimeHrs,
+          overtimePay: overtimePay,
+          allowance: allowance,
+          salaryAdjustment: salaryAdjustment,
+          totalearnings: totalearnings,
+          grosspay: grosspay,
+          pagibig: pagibig,
+          philhealth: philhealth,
+          sss: sss,
+          tax: tax,
+          deduction: deduction,
+          totaldeduct: totaldeduct,
+          netpay: netpay,
+        });
       });
-    });
-    setTimeout(() => {
-      showOptions("Are you sure?", "", "info", () => {
-        const PayrollDetails = {
-          cutoff: `${localStorage.getItem("startDate")}-${localStorage.getItem(
-            "endDate"
-          )}`,
-          details: employee,
-        };
-        Fetch(
-          config.addPayroll,
-          "POST",
-          (result) => {
-            if (result.loading) {
-              loading(true);
-            }
-            if (!result.loading) {
-              loading(false);
-              if (result.data.Error) {
-                showMessage("Oppsss", result.data.msg, "error");
-                return;
+      setTimeout(() => {
+        showOptions("Are you sure?", "", "info", () => {
+          const PayrollDetails = {
+            cutoff: `${localStorage.getItem(
+              "startDate"
+            )}-${localStorage.getItem("endDate")}`,
+            details: employee,
+          };
+          Fetch(
+            config.addPayroll,
+            "POST",
+            (result) => {
+              if (result.loading) {
+                loading(true);
               }
-              showMessage(
-                `${localStorage.getItem("startDate")}-${localStorage.getItem(
-                  "endDate"
-                )}`,
-                "Payroll has been created",
-                "success"
-              ).then(() => {});
-            }
-          },
-          PayrollDetails
-        );
-      });
-    }, 100);
-  });
+              if (!result.loading) {
+                loading(false);
+                if (result.data.Error) {
+                  showMessage("Oppsss", result.data.msg, "error");
+                  return;
+                }
+                showMessage(
+                  `${localStorage.getItem("startDate")}-${localStorage.getItem(
+                    "endDate"
+                  )}`,
+                  "Payroll has been created",
+                  "success"
+                ).then(() => {});
+              }
+            },
+            PayrollDetails
+          );
+        });
+      }, 100);
+    });
 };
 
 const CloseModal = () => {
@@ -159,33 +171,39 @@ const populateEmployee = () => {
 };
 
 const ModaladdAllowance = () => {
-  $("#modal_addAllowance").off("click").on("click",() => {
-    $(".additional_modal .modal").css("display", "block");
-    $("#targetText").html("Add Allowance");
-    $(".additional-table").empty();
-    populateEmployee();
-    addModalItem();
-  });
+  $("#modal_addAllowance")
+    .off("click")
+    .on("click", () => {
+      $(".additional_modal .modal").css("display", "block");
+      $("#targetText").html("Add Allowance");
+      $(".additional-table").empty();
+      populateEmployee();
+      addModalItem();
+    });
 };
 
 const ModaladdDeduction = () => {
-  $("#modal_addDeduction").off("click").on("click",() => {
-    $(".additional_modal .modal").css("display", "block");
-    $("#targetText").html("Add Deduction");
-    $(".additional-table").empty();
-    populateEmployee();
-    addModalItem();
-  });
+  $("#modal_addDeduction")
+    .off("click")
+    .on("click", () => {
+      $(".additional_modal .modal").css("display", "block");
+      $("#targetText").html("Add Deduction");
+      $(".additional-table").empty();
+      populateEmployee();
+      addModalItem();
+    });
 };
 
 const ModaladdAdjustment = () => {
-  $("#modal_addAdjustment").off("click").on("click",() => {
-    $(".additional_modal .modal").css("display", "block");
-    $("#targetText").html("Add Adjustment");
-    $(".additional-table").empty();
-    populateEmployee();
-    addModalItem();
-  });
+  $("#modal_addAdjustment")
+    .off("click")
+    .on("click", () => {
+      $(".additional_modal .modal").css("display", "block");
+      $("#targetText").html("Add Adjustment");
+      $(".additional-table").empty();
+      populateEmployee();
+      addModalItem();
+    });
 };
 $("#dropdownEmployee").on("change", () => {
   const uid = $("#dropdownEmployee").val();
@@ -207,58 +225,60 @@ $("#dropdownEmployee").on("change", () => {
   }
 });
 const addModalItem = () => {
-  $("#add-modal-item").off("click").on("click",() => {
-    const target = $("#targetText").html();
-    const name = $("#name").val();
-    const amount = $("#amount").val();
-    const uid = $("#dropdownEmployee").val();
-    const cutoff = `${localStorage.getItem("startDate")}-${localStorage.getItem(
-      "endDate"
-    )}`;
-    if (
-      target == "" ||
-      name == "" ||
-      amount == "" ||
-      uid == null ||
-      isNaN(amount)
-    ) {
-      showMessage("Ooopsss", "Please try again", "info");
-      return;
-    }
+  $("#add-modal-item")
+    .off("click")
+    .on("click", () => {
+      const target = $("#targetText").html();
+      const name = $("#name").val();
+      const amount = $("#amount").val();
+      const uid = $("#dropdownEmployee").val();
+      const cutoff = `${localStorage.getItem(
+        "startDate"
+      )}-${localStorage.getItem("endDate")}`;
+      if (
+        target == "" ||
+        name == "" ||
+        amount == "" ||
+        uid == null ||
+        isNaN(amount)
+      ) {
+        showMessage("Ooopsss", "Please try again", "info");
+        return;
+      }
 
-    switch (target) {
-      case "Add Allowance":
-        addModalEmployeeAdditional(
-          uid,
-          name,
-          amount,
-          cutoff,
-          "allowance",
-          "Allowance"
-        );
-        break;
-      case "Add Deduction":
-        addModalEmployeeAdditional(
-          uid,
-          name,
-          amount,
-          cutoff,
-          "deduction",
-          "Deduction"
-        );
-        break;
-      case "Add Adjustment":
-        addModalEmployeeAdditional(
-          uid,
-          name,
-          amount,
-          cutoff,
-          "adjustment",
-          "Adjustment"
-        );
-        break;
-    }
-  });
+      switch (target) {
+        case "Add Allowance":
+          addModalEmployeeAdditional(
+            uid,
+            name,
+            amount,
+            cutoff,
+            "allowance",
+            "Allowance"
+          );
+          break;
+        case "Add Deduction":
+          addModalEmployeeAdditional(
+            uid,
+            name,
+            amount,
+            cutoff,
+            "deduction",
+            "Deduction"
+          );
+          break;
+        case "Add Adjustment":
+          addModalEmployeeAdditional(
+            uid,
+            name,
+            amount,
+            cutoff,
+            "adjustment",
+            "Adjustment"
+          );
+          break;
+      }
+    });
 };
 
 const showModalItem = (id, cutoff, table, target) => {
@@ -592,10 +612,9 @@ const showTable = () => {
           $(this).addClass("active");
         });
       }, 1000);
-      
     }
   });
-loading(false);
+  loading(false);
 };
 
 async function contributions(target) {

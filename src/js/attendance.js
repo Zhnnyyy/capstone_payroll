@@ -170,12 +170,52 @@ const onChangeDate = () => {
   $("#endDate").on("change", () => {
     let startDate = $("#startDate").val();
     let endDate = $("#endDate").val();
-    if (startDate.length == 0 && endDate.length > 0) {
-      showMessage("Oppsss", "Please select start date first!", "info");
-      $("#endDate").val("");
-      return;
+    let validate1 = false;
+    let validate2 = false;
+    if (endDate) {
+      if (startDate.length == 0) {
+        showMessage("Oppsss", "Please select start date first!", "info").then(
+          () => {
+            $("#endDate").val("");
+            return;
+          }
+        );
+      } else {
+        validate1 = true;
+      }
+      if (startDate > endDate) {
+        showMessage(
+          "Oppsss",
+          "End date should be greater than start date!",
+          "info"
+        ).then(() => {
+          $("#endDate").val("");
+          return;
+        });
+      } else {
+        validate2 = true;
+      }
+
+      if (validate1 && validate2) {
+        loadFilteredTable(startDate, endDate);
+      } else {
+        loadTables();
+      }
     }
-    loadFilteredTable(startDate, endDate);
+    // if (startDate.length == 0 && endDate.length > 0) {
+    //   showMessage("Oppsss", "Please select start date first!", "info").then(
+    //     () => {
+    //       $("#endDate").val("");
+    //     }
+    //   );
+    // }
+    // if (startDate.length != 0 && startDate > endDate) {
+    //   showMessage("Oppsss", "Invalid Date", "info").then(() => {
+    //     $("#endDate").val("");
+    //   });
+    // } else {
+    //   loadFilteredTable(startDate, endDate);
+    // }
   });
 };
 
