@@ -7,6 +7,7 @@ export async function TimesheetFunction() {
   onChangeDate();
   $("#timesheetSearch").on("change", function () {
     const data = $(this).val();
+    $("#timesheet-table").empty();
     loadFiltered(data);
   });
 }
@@ -19,11 +20,11 @@ const loadFiltered = (data) => {
     config.timesheetEmployeeFiltered,
     "POST",
     (result) => {
-      // if (result.loading) {
-      //   loading(true);
-      // }
+      if (result.loading) {
+        loading(true);
+      }
       if (!result.loading) {
-        // loading(false);
+        loading(false);
         const data = result.data;
         $.each(data, (index, data) => {
           table.append(

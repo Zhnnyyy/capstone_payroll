@@ -346,6 +346,9 @@
 .settings-container .leavetypes {
   display: none;
 }
+.settings-container .account {
+  display: none;
+}
 .remove-items-btn {
   color: red;
 }
@@ -361,7 +364,14 @@
   overflow: auto;
   display: none;
 }
-
+.reset-account {
+  padding: 5px;
+  background: red;
+  color: #fff;
+}
+.account .settings-table-container table thead tr th:nth-of-type(2) {
+  width: 300px;
+}
 .request-history-modal .modal-content {
   margin: 0 auto;
   margin-top: 5%;
@@ -407,6 +417,7 @@
 }
 .request-history-modal .table-container table tbody tr {
   border-bottom: 1px solid #dddddd;
+  font-size: 12px;
 }
 .request-history-modal .table-container table tbody tr:nth-of-type(even) {
   background: #fdfdfd;

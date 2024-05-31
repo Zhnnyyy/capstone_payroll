@@ -97,6 +97,8 @@ const config = {
   changeEmployeePass: "https://server-ywyf.onrender.com/mobile/forgotpass/new",
   employeeInfo: "https://server-ywyf.onrender.com/employee/information",
   login: "https://server-ywyf.onrender.com/payroll/login",
+
+  resetaccount: "https://server-ywyf.onrender.com/account/reset",
 };
 
 export default config;

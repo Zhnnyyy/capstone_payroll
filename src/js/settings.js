@@ -42,7 +42,43 @@ const toggleContent = (target) => {
       showContent(".leavetypes");
       leaveTypes();
       break;
+    case "account":
+      showContent(".account");
+      account();
+      break;
   }
+};
+
+const account = async () => {
+  Fetch(config.payrollEmployee, "GET", (result) => {
+    if (result.loading) {
+      loading(true);
+    }
+    if (!result.loading) {
+      loading(false);
+      const tbl = $(".account-table").empty();
+
+      $.each(result.data, (i, data) => {
+        console.log(data.EmployeeID);
+        tbl.append(
+          ` <tr>
+          <td>${data.EmployeeID}</td>
+          <td>${`${data.Firstname} ${data.Lastname}`}</td>
+          <td><div class='reset-account' data-id='${data.EmployeeID}'>
+          RESET
+          </div></td>
+        </tr>`
+        );
+      });
+    }
+
+    $(".reset-account")
+      .off("click")
+      .on("click", function () {
+        let id = $(this).data("id");
+        showOptions("Warning", "Are you sure?", "warning", () => {});
+      });
+  });
 };
 const leaveTypes = () => {
   showLeaveTypes();

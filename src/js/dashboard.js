@@ -46,10 +46,14 @@ const makecalendar = () => {
   }
 };
 
+setInterval(() => {
+  dashboardDetails();
+}, 1000);
+
 const dashboardDetails = () => {
   Fetch(config.dashboardDetails, "GET", (result) => {
     if (result.loading) {
-      loading(true);
+      // loading(true);
     }
     if (!result.loading) {
       loading(false);
@@ -58,7 +62,6 @@ const dashboardDetails = () => {
       $("#attendance").html(data.attendance);
       $("#request").html(data.request);
       $("#leave").html(data.leave);
-
       let yearHoliday = [];
 
       $.each(data.holiday.Regular_Holidays, async (i, res) => {

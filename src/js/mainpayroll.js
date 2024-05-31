@@ -128,15 +128,17 @@ const generatePayroll = () => {
                   showMessage("Oppsss", result.data.msg, "error");
                   return;
                 }
+                localStorage.setItem("setPayroll", false);
                 showMessage(
                   `${localStorage.getItem("startDate")}-${localStorage.getItem(
                     "endDate"
                   )}`,
-                  "Payroll has been created",
+                  "Payroll has been created, this page will be close in 3seconds",
                   "success"
                 ).then(() => {
                   localStorage.setItem("setPayroll", false);
                 });
+                closeMe();
               }
             },
             PayrollDetails
@@ -144,6 +146,12 @@ const generatePayroll = () => {
         });
       }, 100);
     });
+};
+
+const closeMe = () => {
+  setTimeout(() => {
+    window.close();
+  }, 3000);
 };
 
 const CloseModal = () => {

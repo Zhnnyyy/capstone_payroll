@@ -29,7 +29,7 @@ export function ManageFunction() {
         showEmployee();
         return;
       }
-      const tbl = $("#row-manageEmployee").empty();
+      $("#row-manageEmployee").empty();
       showEmployeeFiltered(data);
       return;
     });
@@ -44,11 +44,11 @@ const showEmployeeFiltered = (id) => {
     config.showEmployeefiltered,
     "POST",
     (result) => {
-      // if (result.loading) {
-      //   loading(true);
-      // }
+      if (result.loading) {
+        loading(true);
+      }
       if (!result.loading) {
-        // loading(false);
+        loading(false);
         const data = result.data;
         $.each(data, function (index, data) {
           let td = "";
@@ -222,7 +222,7 @@ const showEmployeeFiltered = (id) => {
                 "Success",
                 "Employee information has been updated",
                 "success"
-              ).then(() => {
+              ).then(function () {
                 showEmployee();
               });
             } else {
@@ -552,7 +552,6 @@ const addEmployee = () => {
         sched: frmdata.get("employeeSchedule"),
         status: frmdata.get("employeeStatus"),
       };
-      console.log(JSON.stringify(data));
       if (
         !inputChecker() &&
         frmdata.get("manage_employeetype") !== null &&
@@ -562,7 +561,6 @@ const addEmployee = () => {
           config.addEmployee,
           "POST",
           (result) => {
-            console.log(result);
             const data = result.data;
             if (result.loading) {
               loading(true);
