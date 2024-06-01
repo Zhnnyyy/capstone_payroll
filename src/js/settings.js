@@ -76,7 +76,9 @@ const account = async () => {
       .off("click")
       .on("click", function () {
         let id = $(this).data("id");
-        showOptions("Warning", "Are you sure?", "warning", () => {});
+        showOptions("Warning", "Are you sure?", "warning", () => {
+resetNow(id);
+});
       });
   });
 };
