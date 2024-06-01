@@ -83,7 +83,7 @@ resetNow(id);
   });
 };
 
-conse resetNow=(id)=>{
+const resetNow=(id)=>{
 const data = {
 id:id
 }
