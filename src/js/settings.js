@@ -80,6 +80,30 @@ const account = async () => {
       });
   });
 };
+
+conse resetNow=(id)=>{
+const data = {
+id:id
+}
+Fetch(config.resetaccount, "POST", (result)=>{
+if(result.loading){
+loading(true);
+}
+if(!result.loading){
+loading(false);
+const res = result.data;
+
+if(res.Error){
+showMessage("Error", "Please try again", "error");
+return
+}
+showMessage("Success", "Account has been reset", "success");
+}
+},data)
+
+}
+
+
 const leaveTypes = () => {
   showLeaveTypes();
   addLeaveTypes();
