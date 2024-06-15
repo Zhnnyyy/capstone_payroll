@@ -42,13 +42,7 @@ const loadTables = () => {
             "<td>" +
             data.Date +
             "</td>" +
-            "<td>" +
-            `<button class='editAttendance' data-id='${data.id}' data-timein='${
-              data.TimeIn
-            }' data-timeout='${data.TimeOut}' data-wrkhrs='${wrkhrs(
-              data.WorkHours
-            )}' ><i class='far fa-edit'></i></button>` +
-            "</td>" +
+            
             "</tr>"
         );
       });
